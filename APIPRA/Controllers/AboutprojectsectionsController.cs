@@ -29,13 +29,22 @@ namespace APIPRA.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Aboutprojectsection>> Get(int id)
         {
-            var item = await _context.Aboutprojectsections.FindAsync(id);
-
-            if (item == null)
-                return NotFound();
-
-            return Ok(item);
+            try
+            {
+                var item = await _context.Aboutprojectsections.FindAsync(id);
+        
+                if (item == null)
+                    return NotFound();
+        
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                // Возвращаем статус 500 и сообщение ошибки, чтобы понять, что не так
+                return StatusCode(500, $"Internal error: {ex.Message}");
+            }
         }
+
 
         // POST: api/Aboutprojectsections
         [HttpPost]
