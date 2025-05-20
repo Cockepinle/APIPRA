@@ -1,0 +1,6 @@
+@APIPRA_HostAddress = http://localhost:5029
+
+GET {{APIPRA_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

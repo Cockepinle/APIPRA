@@ -1,0 +1,804 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alepi\\source\\repos\\APIPRA\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\render.yaml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\render.yaml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\workarticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\workarticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\usertestresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\usertestresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\userquestionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\userquestionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\testimagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\testimagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\socialhelparticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\socialhelparticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\migrationcenterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\migrationcenterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\medicalclinicscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\medicalclinicscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\medicalarticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\medicalarticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\legalarticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\legalarticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\languagetestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\languagetestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\jobvacanciescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\jobvacanciescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\housingdocumentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\housingdocumentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\housingarticletypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\housingarticletypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\housingarticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\housingarticlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\forumrepliescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\forumrepliescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\forumpostscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\forumpostscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\controllers\\aboutprojectsectionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\aboutprojectsectionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\aboutprojectsection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\aboutprojectsection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\postgrescontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\postgrescontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\testimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\testimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\apipra.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\apipra.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\forumreply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\forumreply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\views\\shared\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\views\\shared\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\userquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\userquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\usertestresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\usertestresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\workarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\workarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\migrationcenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\migrationcenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\socialhelparticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\socialhelparticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\medicalclinic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\medicalclinic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\medicalarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\medicalarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\legalarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\legalarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\languagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\languagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\housingarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\housingarticle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\forumpost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\forumpost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\jobvacancy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\jobvacancy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\housingdocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\housingdocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipra\\apipra\\models\\housingarticletype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\housingarticletype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 1546,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "render.yaml",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\render.yaml",
+              "RelativeDocumentMoniker": "APIPRA\\render.yaml",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\render.yaml",
+              "RelativeToolTip": "APIPRA\\render.yaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2025-05-20T21:06:55.838Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\appsettings.json",
+              "RelativeDocumentMoniker": "APIPRA\\appsettings.json",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\appsettings.json",
+              "RelativeToolTip": "APIPRA\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-20T18:38:48.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Program.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Program.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Program.cs",
+              "RelativeToolTip": "APIPRA\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:16:32.719Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "WorkarticlesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\WorkarticlesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\WorkarticlesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\WorkarticlesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\WorkarticlesController.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAmwEgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:39:51.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UsertestresultsController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\UsertestresultsController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\UsertestresultsController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\UsertestresultsController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\UsertestresultsController.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAmwF0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:37:04.743Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\UsersController.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAmwF0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:35:01.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserquestionsController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\UserquestionsController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\UserquestionsController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\UserquestionsController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\UserquestionsController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAmwGcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:36:21.969Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TestimagesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\TestimagesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\TestimagesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\TestimagesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\TestimagesController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAmwGcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:31:06.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SocialhelparticlesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\SocialhelparticlesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\SocialhelparticlesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\SocialhelparticlesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\SocialhelparticlesController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAmwGcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:30:29.753Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MigrationcentersController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\MigrationcentersController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\MigrationcentersController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\MigrationcentersController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\MigrationcentersController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAmwGcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:29:38.591Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MedicalclinicsController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\MedicalclinicsController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\MedicalclinicsController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\MedicalclinicsController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\MedicalclinicsController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAmwGcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:28:57.761Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MedicalarticlesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\MedicalarticlesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\MedicalarticlesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\MedicalarticlesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\MedicalarticlesController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAmwGcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:28:15.033Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LegalarticlesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\LegalarticlesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\LegalarticlesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\LegalarticlesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\LegalarticlesController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAmwGcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:27:36.07Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LanguagetestsController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\LanguagetestsController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\LanguagetestsController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\LanguagetestsController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\LanguagetestsController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAmwGcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:26:54.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "JobvacanciesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\JobvacanciesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\JobvacanciesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\JobvacanciesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\JobvacanciesController.cs",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAmwIgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:26:17.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "HousingdocumentsController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\HousingdocumentsController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\HousingdocumentsController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\HousingdocumentsController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\HousingdocumentsController.cs",
+              "ViewState": "AQIAAEsAAAAAAAAAAAAmwIkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:25:33.711Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "HousingarticletypesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\HousingarticletypesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\HousingarticletypesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\HousingarticletypesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\HousingarticletypesController.cs",
+              "ViewState": "AQIAAEsAAAAAAAAAAAAmwIkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:22:17.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "HousingarticlesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\HousingarticlesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\HousingarticlesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\HousingarticlesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\HousingarticlesController.cs",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAmwIgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:23:00.506Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ForumrepliesController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\ForumrepliesController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\ForumrepliesController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\ForumrepliesController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\ForumrepliesController.cs",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAmwJ4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:23:35.763Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ForumpostsController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\ForumpostsController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\ForumpostsController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\ForumpostsController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\ForumpostsController.cs",
+              "ViewState": "AQIAAEsAAAAAAAAAAAAmwIkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:24:13.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "AboutprojectsectionsController.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\AboutprojectsectionsController.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Controllers\\AboutprojectsectionsController.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Controllers\\AboutprojectsectionsController.cs",
+              "RelativeToolTip": "APIPRA\\Controllers\\AboutprojectsectionsController.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAmwF4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T19:24:54.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Aboutprojectsection.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Aboutprojectsection.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Aboutprojectsection.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Aboutprojectsection.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Aboutprojectsection.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:41:25.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "PostgresContext.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\PostgresContext.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\PostgresContext.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\PostgresContext.cs",
+              "RelativeToolTip": "APIPRA\\Models\\PostgresContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIEBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:35:34.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Testimage.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Testimage.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Testimage.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Testimage.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Testimage.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:45:38.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "APIPRA.http",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\APIPRA.http",
+              "RelativeDocumentMoniker": "APIPRA\\APIPRA.http",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\APIPRA.http",
+              "RelativeToolTip": "APIPRA\\APIPRA.http",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-05-20T19:40:14.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Forumreply.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Forumreply.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Forumreply.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Forumreply.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Forumreply.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:10.448Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Views\\Shared\\Create.cshtml",
+              "RelativeDocumentMoniker": "APIPRA\\Views\\Shared\\Create.cshtml",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Views\\Shared\\Create.cshtml",
+              "RelativeToolTip": "APIPRA\\Views\\Shared\\Create.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-20T19:15:03.452Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Workarticle.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Workarticle.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Workarticle.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Workarticle.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Workarticle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:46:25.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Usertestresult.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Usertestresult.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Usertestresult.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Usertestresult.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Usertestresult.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:46:11.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Userquestion.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Userquestion.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Userquestion.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Userquestion.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Userquestion.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:46:05.661Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Migrationcenter.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Migrationcenter.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Migrationcenter.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Migrationcenter.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Migrationcenter.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:43:41.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Socialhelparticle.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Socialhelparticle.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Socialhelparticle.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Socialhelparticle.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Socialhelparticle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:45:09.625Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "Medicalclinic.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Medicalclinic.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Medicalclinic.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Medicalclinic.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Medicalclinic.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:43:00.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Medicalarticle.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Medicalarticle.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Medicalarticle.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Medicalarticle.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Medicalarticle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:57.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Legalarticle.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Legalarticle.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Legalarticle.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Legalarticle.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Legalarticle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:54.078Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Languagetest.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Languagetest.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Languagetest.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Languagetest.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Languagetest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:46.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "Housingarticle.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Housingarticle.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Housingarticle.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Housingarticle.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Housingarticle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:19.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\User.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\User.cs",
+              "RelativeToolTip": "APIPRA\\Models\\User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:45:43.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "Forumpost.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Forumpost.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Forumpost.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Forumpost.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Forumpost.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:00.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Jobvacancy.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Jobvacancy.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Jobvacancy.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Jobvacancy.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Jobvacancy.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:43.162Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "Housingdocument.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Housingdocument.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Housingdocument.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Housingdocument.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Housingdocument.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:31.064Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Housingarticletype.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Housingarticletype.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\Housingarticletype.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\Models\\Housingarticletype.cs",
+              "RelativeToolTip": "APIPRA\\Models\\Housingarticletype.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T18:42:26.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1a46fd64-28d5-434c-8eb3-17a02d419b53}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:7:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:5:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:6:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{74946827-37a0-11d2-a273-00c04f8ef4ff}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
