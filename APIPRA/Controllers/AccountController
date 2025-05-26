@@ -63,4 +63,3 @@ namespace APIPRA.Controllers
             return Convert.ToBase64String(sha256.ComputeHash(bytes));
         }
     }
-Ъ
