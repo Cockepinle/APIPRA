@@ -21,7 +21,7 @@ namespace APIPRA.Controllers
             }
 
             // POST: api/account/register
-            [HttpPost("register")]
+           [HttpPost("register")]
             public async Task<IActionResult> Register([FromBody] RegisterRequest model)
             {
                 if (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
@@ -43,11 +43,10 @@ namespace APIPRA.Controllers
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
             
-                    return Ok("Регистрация прошла успешно.");
+                    return Ok(new { message = "Регистрация прошла успешно." });
                 }
                 catch (Exception ex)
                 {
-                    // Здесь можно использовать логгер, например _logger.LogError(ex, "Ошибка регистрации");
                     Console.WriteLine($"Ошибка регистрации: {ex.Message}");
                     return StatusCode(500, "Внутренняя ошибка сервера");
                 }
