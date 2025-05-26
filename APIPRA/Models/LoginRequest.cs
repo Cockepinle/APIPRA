@@ -1,8 +1,12 @@
-namespace APIPRA.Models
+﻿namespace APIPRA.Models
 {
     public class LoginRequest
     {
+       
         public string Email { get; set; } = "";
         public string Password { get; set; } = "";
+    
+
+
     }
 }

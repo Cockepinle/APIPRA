@@ -6862,11 +6862,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\APIPRA.csproj",
+      "projectUniqueName": "C:\\Users\\alepi\\Source\\Repos\\APIPR\\APIPRA\\APIPRA.csproj",
       "projectName": "APIPRA",
-      "projectPath": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\APIPRA.csproj",
+      "projectPath": "C:\\Users\\alepi\\Source\\Repos\\APIPR\\APIPRA\\APIPRA.csproj",
       "packagesPath": "C:\\Users\\alepi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alepi\\source\\repos\\APIPRA\\APIPRA\\obj\\",
+      "outputPath": "C:\\Users\\alepi\\Source\\Repos\\APIPR\\APIPRA\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

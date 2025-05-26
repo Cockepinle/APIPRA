@@ -1,4 +1,4 @@
-namespace APIPRA.Models
+﻿namespace APIPRA.Models
 {
     public class RegisterRequest
     {
