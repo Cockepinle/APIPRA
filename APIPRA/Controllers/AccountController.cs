@@ -26,23 +26,33 @@ namespace APIPRA.Controllers
             {
                 if (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
                     return BadRequest("Email и пароль обязательны.");
-
-                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (existingUser != null)
-                    return Conflict("Пользователь с таким Email уже существует.");
-
-                var user = new User
+            
+                try
                 {
-                    Name = model.Name,
-                    Email = model.Email,
-                    PasswordHash = HashPassword(model.Password)
-                };
-
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-
-                return Ok("Регистрация прошла успешно.");
+                    var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                    if (existingUser != null)
+                        return Conflict("Пользователь с таким Email уже существует.");
+            
+                    var user = new User
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        PasswordHash = HashPassword(model.Password)
+                    };
+            
+                    _context.Users.Add(user);
+                    await _context.SaveChangesAsync();
+            
+                    return Ok("Регистрация прошла успешно.");
+                }
+                catch (Exception ex)
+                {
+                    // Здесь можно использовать логгер, например _logger.LogError(ex, "Ошибка регистрации");
+                    Console.WriteLine($"Ошибка регистрации: {ex.Message}");
+                    return StatusCode(500, "Внутренняя ошибка сервера");
+                }
             }
+
 
             // POST: api/account/login
             [HttpPost("login")]
