@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using APIPRA.Models;
 
@@ -22,7 +21,9 @@ namespace APIPRA.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Forumpost>>> GetAll()
         {
-            return await _context.Forumposts.ToListAsync();
+            return await _context.Forumposts
+                .Include(p => p.User) // Если есть навигационное свойство
+                .ToListAsync();
         }
 
         // GET: api/Forumposts/{id}
@@ -30,6 +31,7 @@ namespace APIPRA.Controllers
         public async Task<ActionResult<Forumpost>> GetById(int id)
         {
             var post = await _context.Forumposts.FindAsync(id);
+
             if (post == null)
                 return NotFound();
 
@@ -38,11 +40,16 @@ namespace APIPRA.Controllers
 
         // POST: api/Forumposts
         [HttpPost]
-        public async Task<ActionResult<Forumpost>> Create(Forumpost post)
+        public async Task<ActionResult<Forumpost>> Create([FromBody] Forumpost post)
         {
+            // Проверка существования пользователя
             var userExists = await _context.Users.AnyAsync(u => u.Id == post.UserId);
             if (!userExists)
                 return BadRequest("UserId не существует.");
+
+            // Установка даты создания, если не указана
+            if (post.CreatedAt == default)
+                post.CreatedAt = DateTime.UtcNow;
 
             _context.Forumposts.Add(post);
             await _context.SaveChangesAsync();
@@ -52,10 +59,14 @@ namespace APIPRA.Controllers
 
         // PUT: api/Forumposts/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Forumpost post)
+        public async Task<IActionResult> Update(int id, [FromBody] Forumpost post)
         {
             if (id != post.Id)
                 return BadRequest("ID в URL не совпадает с ID в теле запроса.");
+
+            var exists = await _context.Forumposts.AnyAsync(p => p.Id == id);
+            if (!exists)
+                return NotFound("Пост не найден.");
 
             _context.Entry(post).State = EntityState.Modified;
 
@@ -65,10 +76,7 @@ namespace APIPRA.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PostExists(id))
-                    return NotFound();
-
-                throw;
+                return StatusCode(500, "Ошибка при сохранении изменений.");
             }
 
             return NoContent();
@@ -86,11 +94,6 @@ namespace APIPRA.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool PostExists(int id)
-        {
-            return _context.Forumposts.Any(e => e.Id == id);
         }
     }
 }
