@@ -96,10 +96,11 @@ public partial class PostgresContext : DbContext
             .HasDefaultValueSql("CURRENT_TIMESTAMP")
             .HasColumnType("timestamp without time zone")
             .HasConversion(
-                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Unspecified) : (DateTime?)null,
-                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Unspecified) : (DateTime?)null
+                v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified)
             )
             .HasColumnName("created_at");
+
 
 
             entity.Property(e => e.Title)
