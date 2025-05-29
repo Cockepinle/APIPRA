@@ -88,7 +88,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("forumposts_pkey");
 
-            entity.ToTable("forumposts");
+            entity.ToTable("\"ForumPosts\"");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Content).HasColumnName("content");
