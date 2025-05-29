@@ -13,5 +13,5 @@ public partial class User
 
     public string PasswordHash { get; set; } = null!;
 
-    
+    public virtual ICollection<Forumpost> Forumposts { get; set; } = new List<Forumpost>();
 }
