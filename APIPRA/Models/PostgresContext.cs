@@ -94,7 +94,7 @@ public partial class PostgresContext : DbContext
             entity.Property(e => e.Content).HasColumnName("content");
             entity.Property(e => e.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP")
-            .HasColumnType("timestamp without time zone")
+            .HasColumnType("timestamp with time zone")
             .HasConversion(
                 v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified),
                 v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified)
