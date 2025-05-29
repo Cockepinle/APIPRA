@@ -93,9 +93,14 @@ public partial class PostgresContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Content).HasColumnName("content");
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("created_at");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasColumnType("timestamp without time zone")
+            .HasConversion(
+                v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified)
+            )
+            .HasColumnName("created_at");
+
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .HasColumnName("title");
