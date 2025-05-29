@@ -87,9 +87,9 @@ public partial class PostgresContext : DbContext
         modelBuilder.Entity<Forumpost>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("forumposts_pkey");
-
+        
             entity.ToTable("forumpost");
-
+        
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Content).HasColumnName("content");
             entity.Property(e => e.CreatedAt)
@@ -100,7 +100,14 @@ public partial class PostgresContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("title");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+        
+            // Вот связь
+            entity.HasOne(d => d.User)
+                .WithMany(p => p.Forumposts)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("forumposts_user_id_fkey");
         });
+
 
         modelBuilder.Entity<Forumreply>(entity =>
         {
