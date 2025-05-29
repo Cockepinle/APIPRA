@@ -1,14 +1,16 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace APIPRA.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HousingdocumentsController : Controller
+    [Produces("application/json")]
+    public class HousingdocumentsController : ControllerBase
     {
         private readonly PostgresContext _context;
 
@@ -17,121 +19,106 @@ namespace APIPRA.Controllers
             _context = context;
         }
 
-        // GET: api/Housingdocuments
+        /// <summary>
+        /// Получить все документы по жилью
+        /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Housingdocument>))]
+        public async Task<ActionResult<IEnumerable<Housingdocument>>> GetHousingDocuments()
         {
-            return View(await _context.Housingdocuments.ToListAsync());
+            return await _context.Housingdocuments.ToListAsync();
         }
 
-        // GET: api/Housingdocuments/Details/5
-        [HttpGet("Details/{id}")]
-        public async Task<IActionResult> Details(int? id)
+        /// <summary>
+        /// Получить документ по ID
+        /// </summary>
+        /// <param name="id">ID документа</param>
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Housingdocument))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Housingdocument>> GetHousingDocument(int id)
         {
-            if (id == null)
+            var document = await _context.Housingdocuments.FindAsync(id);
+
+            if (document == null)
                 return NotFound();
 
-            var housingdocument = await _context.Housingdocuments.FirstOrDefaultAsync(m => m.Id == id);
-            if (housingdocument == null)
-                return NotFound();
-
-            return View(housingdocument);
+            return document;
         }
 
-        // GET: api/Housingdocuments/Create
-        [HttpGet("Create")]
-        public IActionResult Create()
+        /// <summary>
+        /// Создать новый документ
+        /// </summary>
+        [HttpPost]
+        [ProducesResponseType(201, Type = typeof(Housingdocument))]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<Housingdocument>> CreateHousingDocument([FromBody] HousingdocumentCreateDto dto)
         {
-            return View();
-        }
-
-        // POST: api/Housingdocuments/Create
-        [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,FileUrl")] Housingdocument housingdocument)
-        {
-            if (ModelState.IsValid)
+            var document = new Housingdocument
             {
-                _context.Add(housingdocument);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(housingdocument);
+                Name = dto.Name,
+                FileUrl = dto.FileUrl
+            };
+
+            _context.Housingdocuments.Add(document);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                nameof(GetHousingDocument),
+                new { id = document.Id },
+                document);
         }
 
-        // GET: api/Housingdocuments/Edit/5
-        [HttpGet("Edit/{id}")]
-        public async Task<IActionResult> Edit(int? id)
+        /// <summary>
+        /// Обновить документ
+        /// </summary>
+        /// <param name="id">ID документа</param>
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateHousingDocument(
+            int id,
+            [FromBody] HousingdocumentUpdateDto dto)
         {
-            if (id == null)
+            if (id != dto.Id)
+                return BadRequest();
+
+            var document = await _context.Housingdocuments.FindAsync(id);
+            if (document == null)
                 return NotFound();
 
-            var housingdocument = await _context.Housingdocuments.FindAsync(id);
-            if (housingdocument == null)
-                return NotFound();
+            document.Name = dto.Name;
+            document.FileUrl = dto.FileUrl;
 
-            return View(housingdocument);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
-        // POST: api/Housingdocuments/Edit/5
-        [HttpPost("Edit/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,FileUrl")] Housingdocument housingdocument)
+        /// <summary>
+        /// Удалить документ
+        /// </summary>
+        /// <param name="id">ID документа</param>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteHousingDocument(int id)
         {
-            if (id != housingdocument.Id)
+            var document = await _context.Housingdocuments.FindAsync(id);
+            if (document == null)
                 return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(housingdocument);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HousingdocumentExists(housingdocument.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(housingdocument);
-        }
+            _context.Housingdocuments.Remove(document);
+            await _context.SaveChangesAsync();
 
-        // GET: api/Housingdocuments/Delete/5
-        [HttpGet("Delete/{id}")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var housingdocument = await _context.Housingdocuments.FirstOrDefaultAsync(m => m.Id == id);
-            if (housingdocument == null)
-                return NotFound();
-
-            return View(housingdocument);
-        }
-
-        // POST: api/Housingdocuments/Delete/5
-        [HttpPost("Delete/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var housingdocument = await _context.Housingdocuments.FindAsync(id);
-            if (housingdocument != null)
-            {
-                _context.Housingdocuments.Remove(housingdocument);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool HousingdocumentExists(int id)
-        {
-            return _context.Housingdocuments.Any(e => e.Id == id);
+            return NoContent();
         }
     }
+
+    // DTO для создания документа
+   
+
+    // DTO для обновления документа
+  
 }

@@ -22,7 +22,16 @@ namespace APIPRA.Controllers
         public async Task<ActionResult<IEnumerable<Forumpost>>> GetAll()
         {
             return await _context.Forumposts
-                .Include(p => p.User) // Если есть навигационное свойство
+                .AsNoTracking()
+                .Select(p => new Forumpost
+                {
+                    Id = p.Id,
+                    UserId = p.UserId,
+                    Title = p.Title,
+                    Content = p.Content,
+                    CreatedAt = p.CreatedAt,
+                    User = null // Исключаем навигационное свойство
+                })
                 .ToListAsync();
         }
 
@@ -30,7 +39,9 @@ namespace APIPRA.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Forumpost>> GetById(int id)
         {
-            var post = await _context.Forumposts.FindAsync(id);
+            var post = await _context.Forumposts
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (post == null)
                 return NotFound();
@@ -40,39 +51,53 @@ namespace APIPRA.Controllers
 
         // POST: api/Forumposts
         [HttpPost]
-        public async Task<IActionResult> CreatePost([FromBody] Forumpost post)
+        public async Task<IActionResult> CreatePost([FromBody] CreateForumpostDto postDto)
         {
             try
             {
-                var userExists = await _context.Users.AnyAsync(u => u.Id == post.UserId);
-                if (!userExists)
-                    return BadRequest("UserId не существует.");
-        
-                post.CreatedAt = DateTime.UtcNow;
-        
-                // Отключаем подгрузку пользователя
-                post.User = null;
-        
+                // Проверка существования пользователя
+                var user = await _context.Users.FindAsync(postDto.UserId);
+                if (user == null)
+                    return BadRequest("Пользователь не найден");
+
+                var post = new Forumpost
+                {
+                    UserId = postDto.UserId,
+                    Title = postDto.Title,
+                    Content = postDto.Content
+                };
+
                 _context.Forumposts.Add(post);
                 await _context.SaveChangesAsync();
-        
-                // Возвращаем только нужные поля
+
                 return Ok(new
                 {
                     post.Id,
-                    post.UserId,
                     post.Title,
                     post.Content,
-                    post.CreatedAt
+                    post.CreatedAt,
+                    Author = user.Name
+                });
+            }
+            catch (DbUpdateException dbEx)
+            {
+                Console.WriteLine($"Database error: {dbEx.InnerException?.Message}");
+                return StatusCode(500, new
+                {
+                    Message = "Ошибка базы данных",
+                    Details = dbEx.InnerException?.Message
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message} - {ex.InnerException?.Message}");
+                Console.WriteLine($"Error: {ex}");
+                return StatusCode(500, new
+                {
+                    Message = "Внутренняя ошибка сервера",
+                    Details = ex.Message
+                });
             }
         }
-
-
 
         // PUT: api/Forumposts/{id}
         [HttpPut("{id}")]

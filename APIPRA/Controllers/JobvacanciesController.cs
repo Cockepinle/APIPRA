@@ -1,14 +1,16 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace APIPRA.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class JobvacanciesController : Controller
+    [Produces("application/json")]
+    public class JobvacanciesController : ControllerBase
     {
         private readonly PostgresContext _context;
 
@@ -17,120 +19,112 @@ namespace APIPRA.Controllers
             _context = context;
         }
 
-        // GET: api/Jobvacancies
+        /// <summary>
+        /// Получить все вакансии
+        /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Jobvacancy>))]
+        public async Task<ActionResult<IEnumerable<Jobvacancy>>> GetJobVacancies()
         {
-            return View(await _context.Jobvacancies.ToListAsync());
+            return await _context.Jobvacancies.ToListAsync();
         }
 
-        // GET: api/Jobvacancies/Details/5
-        [HttpGet("Details/{id}")]
-        public async Task<IActionResult> Details(int? id)
+        /// <summary>
+        /// Получить вакансию по ID
+        /// </summary>
+        /// <param name="id">ID вакансии</param>
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Jobvacancy))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Jobvacancy>> GetJobVacancy(int id)
         {
-            if (id == null)
+            var vacancy = await _context.Jobvacancies.FindAsync(id);
+
+            if (vacancy == null)
                 return NotFound();
 
-            var jobvacancy = await _context.Jobvacancies.FirstOrDefaultAsync(m => m.Id == id);
-            if (jobvacancy == null)
-                return NotFound();
-
-            return View(jobvacancy);
+            return vacancy;
         }
 
-        // GET: api/Jobvacancies/Create
-        [HttpGet("Create")]
-        public IActionResult Create()
+        /// <summary>
+        /// Создать новую вакансию
+        /// </summary>
+        [HttpPost]
+        [ProducesResponseType(201, Type = typeof(Jobvacancy))]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<Jobvacancy>> CreateJobVacancy([FromBody] JobvacancyCreateDto dto)
         {
-            return View();
-        }
-
-        // POST: api/Jobvacancies/Create
-        [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,EmployerName,Location,ContactInfo,CreatedAt")] Jobvacancy jobvacancy)
-        {
-            if (ModelState.IsValid)
+            var vacancy = new Jobvacancy
             {
-                _context.Add(jobvacancy);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(jobvacancy);
+                Title = dto.Title,
+                Description = dto.Description,
+                EmployerName = dto.EmployerName,
+                Location = dto.Location,
+                ContactInfo = dto.ContactInfo
+            };
+
+            _context.Jobvacancies.Add(vacancy);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                nameof(GetJobVacancy),
+                new { id = vacancy.Id },
+                vacancy);
         }
 
-        // GET: api/Jobvacancies/Edit/5
-        [HttpGet("Edit/{id}")]
-        public async Task<IActionResult> Edit(int? id)
+        /// <summary>
+        /// Обновить вакансию
+        /// </summary>
+        /// <param name="id">ID вакансии</param>
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateJobVacancy(
+            int id,
+            [FromBody] JobvacancyUpdateDto dto)
         {
-            if (id == null)
+            if (id != dto.Id)
+                return BadRequest();
+
+            var vacancy = await _context.Jobvacancies.FindAsync(id);
+            if (vacancy == null)
                 return NotFound();
 
-            var jobvacancy = await _context.Jobvacancies.FindAsync(id);
-            if (jobvacancy == null)
-                return NotFound();
+            vacancy.Title = dto.Title;
+            vacancy.Description = dto.Description;
+            vacancy.EmployerName = dto.EmployerName;
+            vacancy.Location = dto.Location;
+            vacancy.ContactInfo = dto.ContactInfo;
 
-            return View(jobvacancy);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
-        // POST: api/Jobvacancies/Edit/5
-        [HttpPost("Edit/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,EmployerName,Location,ContactInfo,CreatedAt")] Jobvacancy jobvacancy)
+        /// <summary>
+        /// Удалить вакансию
+        /// </summary>
+        /// <param name="id">ID вакансии</param>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteJobVacancy(int id)
         {
-            if (id != jobvacancy.Id)
+            var vacancy = await _context.Jobvacancies.FindAsync(id);
+            if (vacancy == null)
                 return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(jobvacancy);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!JobvacancyExists(jobvacancy.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(jobvacancy);
-        }
+            _context.Jobvacancies.Remove(vacancy);
+            await _context.SaveChangesAsync();
 
-        // GET: api/Jobvacancies/Delete/5
-        [HttpGet("Delete/{id}")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var jobvacancy = await _context.Jobvacancies.FirstOrDefaultAsync(m => m.Id == id);
-            if (jobvacancy == null)
-                return NotFound();
-
-            return View(jobvacancy);
-        }
-
-        // POST: api/Jobvacancies/Delete/5
-        [HttpPost("Delete/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var jobvacancy = await _context.Jobvacancies.FindAsync(id);
-            if (jobvacancy != null)
-            {
-                _context.Jobvacancies.Remove(jobvacancy);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool JobvacancyExists(int id)
-        {
-            return _context.Jobvacancies.Any(e => e.Id == id);
+            return NoContent();
         }
     }
+
+    // DTO для создания вакансии
+  
+
+    // DTO для обновления вакансии
+  
 }

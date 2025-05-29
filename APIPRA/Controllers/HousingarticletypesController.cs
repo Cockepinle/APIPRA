@@ -1,14 +1,16 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace APIPRA.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HousingarticletypesController : Controller
+    [Produces("application/json")] // Явно указываем тип ответа
+    public class HousingarticletypesController : ControllerBase
     {
         private readonly PostgresContext _context;
 
@@ -17,121 +19,92 @@ namespace APIPRA.Controllers
             _context = context;
         }
 
-        // GET: api/Housingarticletypes
+        /// <summary>
+        /// Получить все типы жилищных статей
+        /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Housingarticletype>))]
+        public async Task<ActionResult<IEnumerable<Housingarticletype>>> Get()
         {
-            return View(await _context.Housingarticletypes.ToListAsync());
+            return await _context.Housingarticletypes.ToListAsync();
         }
 
-        // GET: api/Housingarticletypes/Details/5
-        [HttpGet("Details/{id}")]
-        public async Task<IActionResult> Details(int? id)
+        /// <summary>
+        /// Получить тип жилищной статьи по ID
+        /// </summary>
+        /// <param name="id">ID типа статьи</param>
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Housingarticletype))]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Housingarticletype>> GetById(int id)
         {
-            if (id == null)
+            var type = await _context.Housingarticletypes.FindAsync(id);
+            if (type == null)
                 return NotFound();
 
-            var housingarticletype = await _context.Housingarticletypes.FirstOrDefaultAsync(m => m.Id == id);
-            if (housingarticletype == null)
-                return NotFound();
-
-            return View(housingarticletype);
+            return type;
         }
 
-        // GET: api/Housingarticletypes/Create
-        [HttpGet("Create")]
-        public IActionResult Create()
+        /// <summary>
+        /// Создать новый тип жилищной статьи
+        /// </summary>
+        [HttpPost]
+        [ProducesResponseType(201, Type = typeof(Housingarticletype))]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<Housingarticletype>> Create([FromBody] HousingarticletypeCreateDto dto)
         {
-            return View();
-        }
+            var type = new Housingarticletype { Name = dto.Name };
 
-        // POST: api/Housingarticletypes/Create
-        [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Housingarticletype housingarticletype)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(housingarticletype);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(housingarticletype);
-        }
-
-        // GET: api/Housingarticletypes/Edit/5
-        [HttpGet("Edit/{id}")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var housingarticletype = await _context.Housingarticletypes.FindAsync(id);
-            if (housingarticletype == null)
-                return NotFound();
-
-            return View(housingarticletype);
-        }
-
-        // POST: api/Housingarticletypes/Edit/5
-        [HttpPost("Edit/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Housingarticletype housingarticletype)
-        {
-            if (id != housingarticletype.Id)
-                return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(housingarticletype);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HousingarticletypeExists(housingarticletype.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(housingarticletype);
-        }
-
-        // GET: api/Housingarticletypes/Delete/5
-        [HttpGet("Delete/{id}")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var housingarticletype = await _context.Housingarticletypes.FirstOrDefaultAsync(m => m.Id == id);
-            if (housingarticletype == null)
-                return NotFound();
-
-            return View(housingarticletype);
-        }
-
-        // POST: api/Housingarticletypes/Delete/5
-        [HttpPost("Delete/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var housingarticletype = await _context.Housingarticletypes.FindAsync(id);
-            if (housingarticletype != null)
-            {
-                _context.Housingarticletypes.Remove(housingarticletype);
-            }
-
+            _context.Housingarticletypes.Add(type);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return CreatedAtAction(nameof(GetById), new { id = type.Id }, type);
         }
 
-        private bool HousingarticletypeExists(int id)
+        /// <summary>
+        /// Обновить тип жилищной статьи
+        /// </summary>
+        /// <param name="id">ID типа статьи</param>
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Update(int id, [FromBody] HousingarticletypeUpdateDto dto)
         {
-            return _context.Housingarticletypes.Any(e => e.Id == id);
+            if (id != dto.Id)
+                return BadRequest();
+
+            var type = await _context.Housingarticletypes.FindAsync(id);
+            if (type == null)
+                return NotFound();
+
+            type.Name = dto.Name;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Удалить тип жилищной статьи
+        /// </summary>
+        /// <param name="id">ID типа статьи</param>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var type = await _context.Housingarticletypes.FindAsync(id);
+            if (type == null)
+                return NotFound();
+
+            _context.Housingarticletypes.Remove(type);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
+
+  
+    // DTO для обновления
+   
 }

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace APIPRA.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HousingarticlesController : Controller
+    public class HousingarticlesController : ControllerBase
     {
         private readonly PostgresContext _context;
 
@@ -20,112 +19,79 @@ namespace APIPRA.Controllers
 
         // GET: api/Housingarticles
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult<IEnumerable<Housingarticle>>> GetHousingarticles()
         {
-            return View(await _context.Housingarticles.ToListAsync());
+            return await _context.Housingarticles.ToListAsync();
         }
 
-        // GET: api/Housingarticles/Details/5
-        [HttpGet("Details/{id}")]
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Housingarticles/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Housingarticle>> GetHousingarticle(int id)
         {
-            if (id == null)
-                return NotFound();
-
-            var housingarticle = await _context.Housingarticles.FirstOrDefaultAsync(m => m.Id == id);
-            if (housingarticle == null)
-                return NotFound();
-
-            return View(housingarticle);
-        }
-
-        // GET: api/Housingarticles/Create
-        [HttpGet("Create")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: api/Housingarticles/Create
-        [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,TypeId")] Housingarticle housingarticle)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(housingarticle);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(housingarticle);
-        }
-
-        // GET: api/Housingarticles/Edit/5
-        [HttpGet("Edit/{id}")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-                return NotFound();
-
             var housingarticle = await _context.Housingarticles.FindAsync(id);
-            if (housingarticle == null)
-                return NotFound();
 
-            return View(housingarticle);
+            if (housingarticle == null)
+            {
+                return NotFound();
+            }
+
+            return housingarticle;
         }
 
-        // POST: api/Housingarticles/Edit/5
-        [HttpPost("Edit/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,TypeId")] Housingarticle housingarticle)
+        // POST: api/Housingarticles
+        [HttpPost]
+        public async Task<ActionResult<Housingarticle>> PostHousingarticle(Housingarticle housingarticle)
+        {
+            _context.Housingarticles.Add(housingarticle);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetHousingarticle), new { id = housingarticle.Id }, housingarticle);
+        }
+
+        // PUT: api/Housingarticles/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutHousingarticle(int id, Housingarticle housingarticle)
         {
             if (id != housingarticle.Id)
-                return NotFound();
-
-            if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(housingarticle);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HousingarticleExists(housingarticle.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            return View(housingarticle);
+
+            _context.Entry(housingarticle).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HousingarticleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: api/Housingarticles/Delete/5
-        [HttpGet("Delete/{id}")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var housingarticle = await _context.Housingarticles.FirstOrDefaultAsync(m => m.Id == id);
-            if (housingarticle == null)
-                return NotFound();
-
-            return View(housingarticle);
-        }
-
-        // POST: api/Housingarticles/Delete/5
-        [HttpPost("Delete/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        // DELETE: api/Housingarticles/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteHousingarticle(int id)
         {
             var housingarticle = await _context.Housingarticles.FindAsync(id);
-            if (housingarticle != null)
-                _context.Housingarticles.Remove(housingarticle);
+            if (housingarticle == null)
+            {
+                return NotFound();
+            }
 
+            _context.Housingarticles.Remove(housingarticle);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return NoContent();
         }
 
         private bool HousingarticleExists(int id)

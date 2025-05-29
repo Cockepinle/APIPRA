@@ -87,34 +87,37 @@ public partial class PostgresContext : DbContext
         modelBuilder.Entity<Forumpost>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("forumposts_pkey");
-        
-            entity.ToTable("forumpost");
-        
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Content).HasColumnName("content");
-            entity.Property(e => e.CreatedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP")
-            .HasColumnType("timestamp without time zone")
-            .HasConversion(
-                v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified),
-                v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified)
-            )
-            .HasColumnName("created_at");
 
+            // Явно указываем название таблицы
+            entity.ToTable("forumposts");
 
+            entity.Property(e => e.Id)
+                .HasColumnName("id")
+                .UseIdentityAlwaysColumn(); // Для SERIAL в PostgreSQL
+
+            entity.Property(e => e.UserId)
+                .HasColumnName("user_id");
 
             entity.Property(e => e.Title)
+                .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("title");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-        
-            // Вот связь
+
+            entity.Property(e => e.Content)
+                .IsRequired()
+                .HasColumnName("content");
+
+            entity.Property(e => e.CreatedAt)
+                .HasColumnName("created_at")
+                .HasColumnType("timestamp with time zone")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAdd();
+
             entity.HasOne(d => d.User)
                 .WithMany(p => p.Forumposts)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("forumposts_user_id_fkey");
         });
-
 
         modelBuilder.Entity<Forumreply>(entity =>
         {
@@ -122,14 +125,24 @@ public partial class PostgresContext : DbContext
 
             entity.ToTable("forumreplies");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Content).HasColumnName("content");
+            entity.Property(e => e.Id)
+                .HasColumnName("id")
+                .UseIdentityAlwaysColumn();
+
+            entity.Property(e => e.Content)
+                .IsRequired()
+                .HasColumnName("content");
+
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("created_at");
-            entity.Property(e => e.PostId).HasColumnName("post_id");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
+                .HasColumnName("created_at")
+                .HasColumnType("timestamp with time zone")
+                .HasDefaultValueSql("now()");
+
+            entity.Property(e => e.PostId)
+                .HasColumnName("post_id");
+
+            entity.Property(e => e.UserId)
+                .HasColumnName("user_id");
         });
 
         modelBuilder.Entity<Housingarticle>(entity =>
@@ -138,12 +151,21 @@ public partial class PostgresContext : DbContext
 
             entity.ToTable("housingarticles");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Content).HasColumnName("content");
+            entity.Property(e => e.Id)
+                .HasColumnName("id")
+                .UseIdentityAlwaysColumn();
+
             entity.Property(e => e.Title)
+                .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("title");
-            entity.Property(e => e.TypeId).HasColumnName("type_id");
+
+            entity.Property(e => e.Content)
+                .IsRequired()
+                .HasColumnName("content");
+
+            entity.Property(e => e.TypeId)
+                .HasColumnName("type_id");
         });
 
         modelBuilder.Entity<Housingarticletype>(entity =>

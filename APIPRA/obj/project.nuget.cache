@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0P1OQ3xavMs=",
+  "dgSpecHash": "kAo80l6SUUA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\alepi\\Source\\Repos\\APIPR\\APIPRA\\APIPRA.csproj",
+  "projectFilePath": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\APIPRA.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alepi\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\alepi\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
