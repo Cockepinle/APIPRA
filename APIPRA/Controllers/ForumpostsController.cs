@@ -39,34 +39,39 @@ namespace APIPRA.Controllers
         }
 
         // POST: api/Forumposts
-       [HttpPost]
-        public async Task<ActionResult<Forumpost>> Create([FromBody] Forumpost post)
+        [HttpPost]
+        public async Task<IActionResult> CreatePost([FromBody] Forumpost post)
         {
-        try
-        {
-            if (post.UserId == null)
-                return BadRequest("UserId обязателен.");
+            try
+            {
+                var userExists = await _context.Users.AnyAsync(u => u.Id == post.UserId);
+                if (!userExists)
+                    return BadRequest("UserId не существует.");
         
-            var userExists = await _context.Users.AnyAsync(u => u.Id == post.UserId);
-            if (!userExists)
-                return BadRequest("UserId не существует.");
-        
-            if (post.CreatedAt == default)
                 post.CreatedAt = DateTime.UtcNow;
         
-            // Очистка навигационного свойства
-            post.User = null;
+                // Отключаем подгрузку пользователя
+                post.User = null;
         
-            _context.Forumposts.Add(post);
-            await _context.SaveChangesAsync();
+                _context.Forumposts.Add(post);
+                await _context.SaveChangesAsync();
         
-            return CreatedAtAction(nameof(GetById), new { id = post.Id }, post);
+                // Возвращаем только нужные поля
+                return Ok(new
+                {
+                    post.Id,
+                    post.UserId,
+                    post.Title,
+                    post.Content,
+                    post.CreatedAt
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message} - {ex.InnerException?.Message}");
+            }
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal Server Error: {ex.Message}");
-        }
-        }
+
 
 
         // PUT: api/Forumposts/{id}
