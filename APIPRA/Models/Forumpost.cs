@@ -15,5 +15,6 @@ public partial class Forumpost
 
     public DateTime? CreatedAt { get; set; }
 
-
+    public virtual User? User { get; set; }
 }
+
