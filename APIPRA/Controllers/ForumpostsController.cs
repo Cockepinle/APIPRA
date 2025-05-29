@@ -1,16 +1,15 @@
-﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
 
 namespace APIPRA.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ForumpostsController : Controller
+    public class ForumpostsController : ControllerBase
     {
         private readonly PostgresContext _context;
 
@@ -21,115 +20,75 @@ namespace APIPRA.Controllers
 
         // GET: api/Forumposts
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult<IEnumerable<Forumpost>>> GetAll()
         {
-            return View(await _context.Forumposts.ToListAsync());
+            return await _context.Forumposts.ToListAsync();
         }
 
-        // GET: api/Forumposts/Details/5
-        [HttpGet("Details/{id}")]
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Forumposts/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Forumpost>> GetById(int id)
         {
-            if (id == null)
+            var post = await _context.Forumposts.FindAsync(id);
+            if (post == null)
                 return NotFound();
 
-            var forumpost = await _context.Forumposts.FirstOrDefaultAsync(m => m.Id == id);
-            if (forumpost == null)
-                return NotFound();
-
-            return View(forumpost);
+            return post;
         }
 
-        // GET: api/Forumposts/Create
-        [HttpGet("Create")]
-        public IActionResult Create()
+        // POST: api/Forumposts
+        [HttpPost]
+        public async Task<ActionResult<Forumpost>> Create(Forumpost post)
         {
-            return View();
-        }
+            var userExists = await _context.Users.AnyAsync(u => u.Id == post.UserId);
+            if (!userExists)
+                return BadRequest("UserId не существует.");
 
-        // POST: api/Forumposts/Create
-        [HttpPost("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,Title,Content,CreatedAt")] Forumpost forumpost)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(forumpost);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(forumpost);
-        }
-
-        // GET: api/Forumposts/Edit/5
-        [HttpGet("Edit/{id}")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var forumpost = await _context.Forumposts.FindAsync(id);
-            if (forumpost == null)
-                return NotFound();
-
-            return View(forumpost);
-        }
-
-        // POST: api/Forumposts/Edit/5
-        [HttpPost("Edit/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,Title,Content,CreatedAt")] Forumpost forumpost)
-        {
-            if (id != forumpost.Id)
-                return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(forumpost);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ForumpostExists(forumpost.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(forumpost);
-        }
-
-        // GET: api/Forumposts/Delete/5
-        [HttpGet("Delete/{id}")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var forumpost = await _context.Forumposts.FirstOrDefaultAsync(m => m.Id == id);
-            if (forumpost == null)
-                return NotFound();
-
-            return View(forumpost);
-        }
-
-        // POST: api/Forumposts/Delete/5
-        [HttpPost("Delete/{id}"), ActionName("DeleteConfirmed")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var forumpost = await _context.Forumposts.FindAsync(id);
-            if (forumpost != null)
-                _context.Forumposts.Remove(forumpost);
-
+            _context.Forumposts.Add(post);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return CreatedAtAction(nameof(GetById), new { id = post.Id }, post);
         }
 
-        private bool ForumpostExists(int id)
+        // PUT: api/Forumposts/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, Forumpost post)
+        {
+            if (id != post.Id)
+                return BadRequest("ID в URL не совпадает с ID в теле запроса.");
+
+            _context.Entry(post).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PostExists(id))
+                    return NotFound();
+
+                throw;
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Forumposts/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var post = await _context.Forumposts.FindAsync(id);
+            if (post == null)
+                return NotFound();
+
+            _context.Forumposts.Remove(post);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool PostExists(int id)
         {
             return _context.Forumposts.Any(e => e.Id == id);
         }
