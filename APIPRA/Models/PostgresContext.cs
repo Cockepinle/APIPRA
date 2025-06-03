@@ -231,6 +231,12 @@ public partial class PostgresContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .HasColumnName("name");
+
+            // Добавляем отношение к Testimages
+            entity.HasMany(d => d.Testimages)
+                .WithOne()
+                .HasForeignKey(d => d.TestId)
+                .HasConstraintName("fk_testimage_languagetest");
         });
 
         modelBuilder.Entity<Legalarticle>(entity =>
@@ -394,7 +400,16 @@ public partial class PostgresContext : DbContext
             entity.Property(e => e.TestId).HasColumnName("test_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-        
+            // Добавляем отношения
+            entity.HasOne(d => d.Test)
+                .WithMany()
+                .HasForeignKey(d => d.TestId)
+                .HasConstraintName("fk_usertestresult_test");
+
+            entity.HasOne(d => d.User)
+                .WithMany()
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("fk_usertestresult_user");
         });
 
         modelBuilder.Entity<Workarticle>(entity =>
