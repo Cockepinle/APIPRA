@@ -94,9 +94,9 @@ namespace APIPRA.Controllers
                     ImageUrl = test.Testimages.First().ImageUrl,
                     Questions = metadata.Questions.Select(q => new QuestionDto
                     {
-                        QuestionText = q.Question,
+                        Question = q.Question,
                         QuestionType = q.QuestionType,
-                        CorrectAnswer = q.Answer
+                        Answer = q.Answer
                     }).ToList(),
                     TestType = metadata.TestType
                 };
