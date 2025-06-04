@@ -35,11 +35,11 @@ namespace APIPRA.Controllers
                     if (image == null) continue;
 
                     string testType = "standard";
-                    if (!string.IsNullOrEmpty(image.Description))
+                    if (!string.IsNullOrEmpty(image.Metadata))
                     {
                         try
                         {
-                            var metadata = JsonSerializer.Deserialize<TestMetadata>(image.Description);
+                            var metadata = JsonSerializer.Deserialize<TestMetadata>(image.Metadata);
                             testType = metadata?.TestType ?? "standard";
                         }
                         catch (JsonException ex)
@@ -53,7 +53,7 @@ namespace APIPRA.Controllers
                     {
                         Id = test.Id,
                         Name = test.Name,
-                        Description = image.Description ?? string.Empty,
+                        Description = image.Metadata ?? string.Empty,
                         ImageUrl = image.ImageUrl,
                         TestType = testType
                     });
@@ -64,10 +64,9 @@ namespace APIPRA.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return StatusCode(500, ex.Message); // для отладки
+                return StatusCode(500, ex.Message);
             }
         }
-
 
         // GET: api/tests/5
         [HttpGet("{id}")]
@@ -86,15 +85,15 @@ namespace APIPRA.Controllers
                 if (testImage == null)
                     return NotFound();
 
-                // Создаем дефолтные вопросы, если Description не JSON
                 var questions = new List<QuestionDto>();
                 string testType = "standard";
+                string description = "Нет описания";
 
                 try
                 {
-                    if (!string.IsNullOrEmpty(testImage.Description))
+                    if (!string.IsNullOrEmpty(testImage.Metadata))
                     {
-                        var metadata = JsonSerializer.Deserialize<TestMetadata>(testImage.Description);
+                        var metadata = JsonSerializer.Deserialize<TestMetadata>(testImage.Metadata);
                         if (metadata != null)
                         {
                             testType = metadata.TestType ?? "standard";
@@ -104,19 +103,21 @@ namespace APIPRA.Controllers
                                 QuestionType = q.QuestionType,
                                 Answer = q.Answer
                             }).ToList() ?? new List<QuestionDto>();
+
+                            description = metadata.Questions?.FirstOrDefault()?.Question ?? "Нет описания";
                         }
                     }
                 }
                 catch (JsonException)
                 {
-                    // Если Description не JSON, оставляем пустые вопросы
+                    // Если metadata не JSON, оставляем дефолтные значения
                 }
 
                 return new TestDetailDto
                 {
                     Id = test.Id,
                     Name = test.Name,
-                    Description = testImage.Description,
+                    Description = description,
                     ImageUrl = testImage.ImageUrl,
                     Questions = questions,
                     TestType = testType
@@ -153,7 +154,6 @@ namespace APIPRA.Controllers
                     }
                 }
 
-
                 var result = new Usertestresult
                 {
                     UserId = userId,
@@ -184,6 +184,7 @@ namespace APIPRA.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
         // GET: api/tests/results/5
         [Authorize]
         [HttpGet("results/{id}")]
@@ -225,5 +226,4 @@ namespace APIPRA.Controllers
                 .ToListAsync();
         }
     }
-
 }

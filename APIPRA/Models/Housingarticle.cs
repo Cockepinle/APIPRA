@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using APIPRA.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace APIPRA.Models;
 
 [Table("housingarticles")]
@@ -21,4 +21,7 @@ public partial class Housingarticle
 
     [Column("type_id")]
     public int? TypeId { get; set; }
+
+    [ForeignKey("TypeId")]
+    public virtual Housingarticletype? ArticleType { get; set; }
 }

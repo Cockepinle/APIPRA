@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APIPRA.Models;
 
+
 [Table("housingarticletypes")]
 public class Housingarticletype
 {

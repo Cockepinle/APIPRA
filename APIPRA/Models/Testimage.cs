@@ -1,42 +1,31 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 namespace APIPRA.Models
 {
     public class Testimage
     {
+        [Key]
+        [Column("id")]
         public int Id { get; set; }
-        public DateTime CreatedAt { get; set; }
 
-        // поле, которое напрямую мапится на колонку metadata (jsonb)
-        public string Metadata { get; set; }
-
-        public string ImageUrl { get; set; }
+        [Column("test_id")]
         public int TestId { get; set; }
 
-        public Languagetest Test { get; set; }
+        [Column("image_url")]
+        [MaxLength(255)]
+        public string ImageUrl { get; set; } = null!;
 
-        // "виртуальное" свойство для получения description из JSON
-        public string Description
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(Metadata))
-                    return null;
-                try
-                {
-                    using (JsonDocument doc = JsonDocument.Parse(Metadata))
-                    {
-                        if (doc.RootElement.TryGetProperty("description", out JsonElement desc))
-                            return desc.GetString();
-                    }
-                }
-                catch
-                {
-                    // Если JSON некорректный — вернуть null или пустую строку
-                }
-                return null;
-            }
-        }
+        [Column("metadata", TypeName = "jsonb")]
+        public string Metadata { get; set; } = null!;
+
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
+
+        [ForeignKey("TestId")]
+        public virtual Languagetest Test { get; set; } = null!;  // <--- ВАЖНО
     }
+
 }

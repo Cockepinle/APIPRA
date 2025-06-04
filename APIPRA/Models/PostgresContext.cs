@@ -150,7 +150,6 @@ public partial class PostgresContext : DbContext
         modelBuilder.Entity<Housingarticle>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("housingarticles_pkey");
-
             entity.ToTable("housingarticles");
 
             entity.Property(e => e.Id)
@@ -168,12 +167,17 @@ public partial class PostgresContext : DbContext
 
             entity.Property(e => e.TypeId)
                 .HasColumnName("type_id");
+
+            // Добавляем связь
+            entity.HasOne(a => a.ArticleType)
+                .WithMany()
+                .HasForeignKey(a => a.TypeId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<Housingarticletype>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("housingarticletypes_pkey");
-
             entity.ToTable("housingarticletypes");
 
             entity.Property(e => e.Id).HasColumnName("id");

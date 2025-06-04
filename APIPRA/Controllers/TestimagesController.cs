@@ -29,7 +29,7 @@ namespace APIPRA.Controllers
             {
                 Id = t.Id,
                 CreatedAt = t.CreatedAt,
-                Description = t.Description,
+                Description = t.Metadata,
                 ImageUrl = t.ImageUrl,
                 TestId = t.TestId
             });
@@ -52,7 +52,7 @@ namespace APIPRA.Controllers
             {
                 Id = testimage.Id,
                 CreatedAt = testimage.CreatedAt,
-                Description = testimage.Description,
+                Description = testimage.Metadata,
                 ImageUrl = testimage.ImageUrl,
                 TestId = testimage.TestId
             };
