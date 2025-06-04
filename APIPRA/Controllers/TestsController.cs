@@ -140,17 +140,26 @@ namespace APIPRA.Controllers
         {
             try
             {
+                _logger.LogInformation($"Начало сохранения результата для теста {resultDto.TestId}");
+
                 var userId = int.Parse(User.FindFirst("UserId")?.Value);
+                var testExists = await _context.Languagetests.AnyAsync(t => t.Id == resultDto.TestId);
 
-                // Получаем правильные ответы
-                var correctAnswers = await _context.TestQuestions
+                if (!testExists)
+                {
+                    _logger.LogError($"Тест {resultDto.TestId} не найден");
+                    return NotFound("Тест не найден");
+                }
+
+                // Получаем вопросы для этого теста
+                var questions = await _context.TestQuestions
                     .Where(q => q.TestId == resultDto.TestId)
-                    .ToDictionaryAsync(q => q.Id, q => q.Answer);
+                    .ToListAsync();
 
-                // Подсчет правильных ответов
-                int score = resultDto.Answers
-                    .Count(a => correctAnswers.TryGetValue(a.QuestionId, out var correctAnswer)
-                              && a.Answer == correctAnswer);
+                _logger.LogInformation($"Найдено {questions.Count} вопросов для теста {resultDto.TestId}");
+
+                var score = resultDto.Answers
+                    .Count(a => questions.Any(q => q.Id == a.QuestionId && q.Answer == a.Answer));
 
                 var result = new Usertestresult
                 {
@@ -163,51 +172,22 @@ namespace APIPRA.Controllers
                 _context.Usertestresults.Add(result);
                 await _context.SaveChangesAsync();
 
+                _logger.LogInformation($"Результат сохранён с ID {result.Id}");
+
                 return Ok(new TestResultResponseDto
                 {
-                    Score = score,
-                    TotalQuestions = correctAnswers.Count,
-                    CompletedAt = result.CompletedAt ?? DateTime.MinValue // Явное преобразование с обработкой null
-                });
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error submitting test result");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
-        // GET: api/tests/results/5
-        // GET: api/tests/results/5
-        [Authorize]
-        [HttpGet("results/{id}")]
-        public async Task<ActionResult<TestResultDetailDto>> GetTestResult(int id)
-        {
-            try
-            {
-                var result = await _context.Usertestresults
-                    .Include(r => r.Test) // Only include Test
-                    .FirstOrDefaultAsync(r => r.Id == id);
-
-                if (result == null)
-                    return NotFound();
-
-                return new TestResultDetailDto
-                {
                     Id = result.Id,
-                    TestName = result.Test?.Name ?? "Unknown Test",
-                    Score = result.Score,
+                    Score = score,
+                    TotalQuestions = questions.Count,
                     CompletedAt = result.CompletedAt ?? DateTime.MinValue
-                };
+                });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting test result");
+                _logger.LogError(ex, "Ошибка сохранения результата теста");
                 return StatusCode(500, "Internal server error");
             }
         }
-
         // GET: api/tests/{id}/questions
         [HttpGet("{id}/questions")]
         public async Task<ActionResult<IEnumerable<TestQuestion>>> GetTestQuestions(int id)
@@ -227,13 +207,13 @@ namespace APIPRA.Controllers
                 var userId = int.Parse(User.FindFirst("UserId")?.Value);
 
                 return await _context.Usertestresults
-                    .AsNoTracking() // Добавлено для повышения производительности
+                    .AsNoTracking()
                     .Where(r => r.UserId == userId)
                     .Include(r => r.Test)
                     .Select(r => new TestResultDetailDto
                     {
                         Id = r.Id,
-                        TestName = r.Test != null ? r.Test.Name : "Unknown Test",
+                        TestId = r.TestId ?? 0,  // Если null, подставит 0                        TestName = r.Test != null ? r.Test.Name : "Unknown Test",
                         Score = r.Score,
                         CompletedAt = r.CompletedAt ?? DateTime.MinValue
                     })
@@ -244,6 +224,53 @@ namespace APIPRA.Controllers
                 _logger.LogError(ex, "Error getting user results");
                 return StatusCode(500, "Internal server error");
             }
+        }
+        [HttpGet("{id}/info")]
+        [AllowAnonymous]
+        public async Task<ActionResult<TestInfo>> GetTestInfo(int id)
+        {
+            var test = await _context.Languagetests
+                .AsNoTracking()
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            if (test == null)
+                return NotFound();
+
+            return new TestInfo
+            {
+                Id = test.Id,
+                Name = test.Name
+            };
+        }
+        [Authorize]
+        [HttpGet("{testId}/results/{userId}")]
+        public async Task<ActionResult<TestResultDetailsDto>> GetTestResultDetails(int testId, int userId)
+        {
+            var result = await _context.Usertestresults
+                .Include(r => r.Test)
+                .FirstOrDefaultAsync(r => r.TestId == testId && r.UserId == userId);
+
+            if (result == null)
+                return NotFound();
+
+            var questions = await _context.TestQuestions
+                .Where(q => q.TestId == testId)
+                .ToListAsync();
+
+            return new TestResultDetailsDto
+            {
+                TestId = testId,
+                TestName = result.Test?.Name ?? "Unknown Test",
+                Score = result.Score,
+                TotalQuestions = questions.Count,
+                CompletedAt = result.CompletedAt ?? DateTime.MinValue,
+                Questions = questions.Select(q => new QuestionResultDto
+                {
+                    QuestionId = q.Id,
+                    QuestionText = q.Question,
+                    CorrectAnswer = q.Answer
+                }).ToList()
+            };
         }
     }
 }
