@@ -76,34 +76,55 @@ namespace APIPRA.Controllers
             try
             {
                 var test = await _context.Languagetests
-                .Include(t => t.Testimages)
-                .FirstOrDefaultAsync(t => t.Id == id);
+                    .Include(t => t.Testimages)
+                    .FirstOrDefaultAsync(t => t.Id == id);
 
-                if (test == null || test.Testimages.FirstOrDefault() == null)
+                if (test == null)
                     return NotFound();
 
-                var metadata = JsonSerializer.Deserialize<TestMetadata>(test.Testimages.First().Description);
-                if (metadata == null)
-                    return BadRequest("Invalid test format");
+                var testImage = test.Testimages?.FirstOrDefault();
+                if (testImage == null)
+                    return NotFound();
+
+                // Создаем дефолтные вопросы, если Description не JSON
+                var questions = new List<QuestionDto>();
+                string testType = "standard";
+
+                try
+                {
+                    if (!string.IsNullOrEmpty(testImage.Description))
+                    {
+                        var metadata = JsonSerializer.Deserialize<TestMetadata>(testImage.Description);
+                        if (metadata != null)
+                        {
+                            testType = metadata.TestType ?? "standard";
+                            questions = metadata.Questions?.Select(q => new QuestionDto
+                            {
+                                Question = q.Question,
+                                QuestionType = q.QuestionType,
+                                Answer = q.Answer
+                            }).ToList() ?? new List<QuestionDto>();
+                        }
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Если Description не JSON, оставляем пустые вопросы
+                }
 
                 return new TestDetailDto
                 {
                     Id = test.Id,
                     Name = test.Name,
-                    Description = test.Testimages.First().Description,
-                    ImageUrl = test.Testimages.First().ImageUrl,
-                    Questions = metadata.Questions.Select(q => new QuestionDto
-                    {
-                        Question = q.Question,
-                        QuestionType = q.QuestionType,
-                        Answer = q.Answer
-                    }).ToList(),
-                    TestType = metadata.TestType
+                    Description = testImage.Description,
+                    ImageUrl = testImage.ImageUrl,
+                    Questions = questions,
+                    TestType = testType
                 };
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine($"Error in GetTest: {ex}");
                 return StatusCode(500, "Internal server error");
             }
         }
