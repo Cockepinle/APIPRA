@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\alepi\\source\\repos\\APIPR\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\testresultdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\testresultdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\controllers\\testscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\testscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\testresultdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\testresultdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\testresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -222,7 +222,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 15,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Bookmark",
@@ -278,24 +278,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "TestsController.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Controllers\\TestsController.cs",
               "RelativeDocumentMoniker": "APIPRA\\Controllers\\TestsController.cs",
               "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Controllers\\TestsController.cs",
               "RelativeToolTip": "APIPRA\\Controllers\\TestsController.cs",
-              "ViewState": "AQIAALgAAAAAAAAAAADwv9QAAAA4AAAA",
+              "ViewState": "AQIAAIgAAAAAAAAAAAAIwLQAAAA6AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T18:11:00.81Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "TestResultDetailDto.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\TestResultDetailDto.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\TestResultDetailDto.cs",
@@ -307,6 +303,10 @@
               "EditorCaption": ""
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "TestResultDto.cs",
@@ -316,8 +316,7 @@
               "RelativeToolTip": "APIPRA\\Models\\TestResultDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T18:28:40.627Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T18:28:40.627Z"
             },
             {
               "$type": "Document",
@@ -329,8 +328,7 @@
               "RelativeToolTip": "APIPRA\\Models\\QuestionResultDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T22:41:37.348Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T22:41:37.348Z"
             },
             {
               "$type": "Document",
@@ -342,8 +340,7 @@
               "RelativeToolTip": "APIPRA\\Models\\TestResultDetailsDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T22:41:23.392Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T22:41:23.392Z"
             },
             {
               "$type": "Document",
@@ -355,8 +352,7 @@
               "RelativeToolTip": "APIPRA\\Models\\TestInfo.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T22:37:39.846Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T22:37:39.846Z"
             },
             {
               "$type": "Document",
@@ -368,8 +364,7 @@
               "RelativeToolTip": "APIPRA\\Models\\TestResultResponseDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T18:36:05.971Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T18:36:05.971Z"
             },
             {
               "$type": "Document",

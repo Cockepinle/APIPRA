@@ -140,27 +140,28 @@ namespace APIPRA.Controllers
         {
             try
             {
-                _logger.LogInformation($"Начало сохранения результата для теста {resultDto.TestId}");
-
-                var userId = int.Parse(User.FindFirst("UserId")?.Value);
-                var testExists = await _context.Languagetests.AnyAsync(t => t.Id == resultDto.TestId);
-
-                if (!testExists)
+                if (resultDto == null || resultDto.Answers == null)
                 {
-                    _logger.LogError($"Тест {resultDto.TestId} не найден");
-                    return NotFound("Тест не найден");
+                    _logger.LogError("Invalid request data");
+                    return BadRequest("Invalid request data");
                 }
 
-                // Получаем вопросы для этого теста
+                var userId = int.Parse(User.FindFirst("UserId")?.Value);
+
+                // Проверка существования теста
+                var testExists = await _context.Languagetests.AnyAsync(t => t.Id == resultDto.TestId);
+                if (!testExists) return NotFound("Test not found");
+
+                // Получаем вопросы
                 var questions = await _context.TestQuestions
                     .Where(q => q.TestId == resultDto.TestId)
                     .ToListAsync();
 
-                _logger.LogInformation($"Найдено {questions.Count} вопросов для теста {resultDto.TestId}");
-
-                var score = resultDto.Answers
+                // Подсчет баллов
+                int score = resultDto.Answers
                     .Count(a => questions.Any(q => q.Id == a.QuestionId && q.Answer == a.Answer));
 
+                // Сохранение результата
                 var result = new Usertestresult
                 {
                     UserId = userId,
@@ -172,19 +173,17 @@ namespace APIPRA.Controllers
                 _context.Usertestresults.Add(result);
                 await _context.SaveChangesAsync();
 
-                _logger.LogInformation($"Результат сохранён с ID {result.Id}");
-
                 return Ok(new TestResultResponseDto
                 {
                     Id = result.Id,
                     Score = score,
                     TotalQuestions = questions.Count,
-                    CompletedAt = result.CompletedAt ?? DateTime.MinValue
+                    CompletedAt = result.CompletedAt.Value
                 });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка сохранения результата теста");
+                _logger.LogError(ex, "Error saving test result");
                 return StatusCode(500, "Internal server error");
             }
         }
