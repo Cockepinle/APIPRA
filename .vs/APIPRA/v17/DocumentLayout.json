@@ -210,7 +210,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 15,
+          "SelectedChildIndex": 14,
           "Children": [
             {
               "$type": "Bookmark",
@@ -278,10 +278,6 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "TestsController.cs",
@@ -289,7 +285,7 @@
               "RelativeDocumentMoniker": "APIPRA\\Controllers\\TestsController.cs",
               "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Controllers\\TestsController.cs",
               "RelativeToolTip": "APIPRA\\Controllers\\TestsController.cs",
-              "ViewState": "AQIAAIgAAAAAAAAAAAAqwKsAAAAAAAAA",
+              "ViewState": "AQIAAIgAAAAAAAAAAAAqwKkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T18:11:00.81Z",
               "EditorCaption": ""
@@ -304,8 +300,7 @@
               "RelativeToolTip": "APIPRA\\Models\\TestResultDetailDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T18:29:09.78Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T18:29:09.78Z"
             },
             {
               "$type": "Document",
@@ -317,8 +312,7 @@
               "RelativeToolTip": "APIPRA\\Controllers\\TestimagesController.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAAhwDYAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T10:36:23.886Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T10:36:23.886Z"
             },
             {
               "$type": "Document",
@@ -871,6 +865,10 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T19:06:26.448Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         },

@@ -238,6 +238,17 @@ public partial class PostgresContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("name");
 
+            entity.HasMany(t => t.TestQuestions)
+            .WithOne(q => q.Test)
+            .HasForeignKey(q => q.TestId)
+            .OnDelete(DeleteBehavior.Cascade); // Каскадное удаление вопросов при удалении теста
+
+            // Настройка связи с изображениями (если ещё не настроено)
+            entity.HasMany(t => t.Testimages)
+                .WithOne(i => i.Test)
+                .HasForeignKey(i => i.TestId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Добавляем маппинг для поля Type
             entity.Property(e => e.Type)
                 .HasMaxLength(50)  // или сколько у тебя в БД
@@ -382,31 +393,23 @@ public partial class PostgresContext : DbContext
         modelBuilder.Entity<TestQuestion>(entity =>
         {
             entity.ToTable("testquestions");
-
             entity.HasKey(e => e.Id);
 
-            entity.Property(e => e.Id)
-                .HasColumnName("id");
-
-            entity.Property(e => e.TestId)
-                .HasColumnName("test_id");
-
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.TestId).HasColumnName("test_id");
             entity.Property(e => e.Question)
                 .HasColumnName("question")
                 .IsRequired()
-                .HasMaxLength(1000); // Измени длину при необходимости
-
+                .HasMaxLength(1000);
             entity.Property(e => e.Answer)
                 .HasColumnName("answer")
                 .IsRequired()
-                .HasMaxLength(1000); // Измени при необходимости
-
+                .HasMaxLength(1000);
             entity.Property(e => e.QuestionType)
                 .HasColumnName("question_type")
                 .IsRequired()
-                .HasMaxLength(255); // Измени при необходимости
+                .HasMaxLength(255);
         });
-
 
         modelBuilder.Entity<User>(entity =>
         {

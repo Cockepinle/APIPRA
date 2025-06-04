@@ -7,11 +7,9 @@ namespace APIPRA.Models
     {
         public int Id { get; set; }
         public int TestId { get; set; }
-        public string Question { get; set; } = null!;
-        public string Answer { get; set; } = null!;
-        public string QuestionType { get; set; } = null!;
+        public Languagetest Test { get; set; } // Навигационное свойство
+        public string Question { get; set; }
+        public string Answer { get; set; }
+        public string QuestionType { get; set; }
     }
-
-
-
 }

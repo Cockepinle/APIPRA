@@ -19,6 +19,10 @@ public class Languagetest
     [MaxLength(50)]
     public string Type { get; set; } = null!;
 
+    // Связь с изображениями теста
     public virtual ICollection<Testimage> Testimages { get; set; } = new List<Testimage>();
+
+    // Добавляем связь с вопросами теста
+    public virtual ICollection<TestQuestion> TestQuestions { get; set; } = new List<TestQuestion>();
 }
 

@@ -179,6 +179,7 @@ namespace APIPRA.Controllers
         }
 
         // GET: api/tests/results/5
+        // GET: api/tests/results/5
         [Authorize]
         [HttpGet("results/{id}")]
         public async Task<ActionResult<TestResultDetailDto>> GetTestResult(int id)
@@ -186,7 +187,7 @@ namespace APIPRA.Controllers
             try
             {
                 var result = await _context.Usertestresults
-                    .Include(r => r.Test)
+                    .Include(r => r.Test) // Only include Test
                     .FirstOrDefaultAsync(r => r.Id == id);
 
                 if (result == null)
@@ -197,7 +198,7 @@ namespace APIPRA.Controllers
                     Id = result.Id,
                     TestName = result.Test?.Name ?? "Unknown Test",
                     Score = result.Score,
-                    CompletedAt = result.CompletedAt ?? DateTime.MinValue // Обработка null
+                    CompletedAt = result.CompletedAt ?? DateTime.MinValue
                 };
             }
             catch (Exception ex)
@@ -205,6 +206,15 @@ namespace APIPRA.Controllers
                 _logger.LogError(ex, "Error getting test result");
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+        // GET: api/tests/{id}/questions
+        [HttpGet("{id}/questions")]
+        public async Task<ActionResult<IEnumerable<TestQuestion>>> GetTestQuestions(int id)
+        {
+            return await _context.TestQuestions
+                .Where(q => q.TestId == id)
+                .ToListAsync();
         }
 
         // GET: api/tests/user/results
@@ -217,14 +227,15 @@ namespace APIPRA.Controllers
                 var userId = int.Parse(User.FindFirst("UserId")?.Value);
 
                 return await _context.Usertestresults
+                    .AsNoTracking() // Добавлено для повышения производительности
                     .Where(r => r.UserId == userId)
                     .Include(r => r.Test)
                     .Select(r => new TestResultDetailDto
                     {
                         Id = r.Id,
-                        TestName = r.Test.Name,
+                        TestName = r.Test != null ? r.Test.Name : "Unknown Test",
                         Score = r.Score,
-                        CompletedAt = r.CompletedAt ?? DateTime.MinValue // Обработка null
+                        CompletedAt = r.CompletedAt ?? DateTime.MinValue
                     })
                     .ToListAsync();
             }
