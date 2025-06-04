@@ -184,7 +184,7 @@ namespace APIPRA.Controllers
                     Id = result.Id,
                     Score = score,
                     TotalQuestions = test.TestQuestions.Count,
-                    CompletedAt = result.CompletedAt ?? DateTime.MinValue // или DateTime.UtcNow
+                    CompletedAt = result.CompletedAt ?? DateTime.MinValue
                 });
             }
             catch (Exception ex)
@@ -209,20 +209,23 @@ namespace APIPRA.Controllers
         {
             try
             {
-                var userId = int.Parse(User.FindFirst("UserId")?.Value);
+                var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+                if (userId == 0) return Unauthorized();
 
-                return await _context.Usertestresults
-                    .AsNoTracking()
-                    .Where(r => r.UserId == userId)
+                var results = await _context.Usertestresults
+                    .Where(r => r.UserId == userId && r.TestId != null)
                     .Include(r => r.Test)
                     .Select(r => new TestResultDetailDto
                     {
                         Id = r.Id,
-                        TestId = r.TestId ?? 0,  // Если null, подставит 0                        TestName = r.Test != null ? r.Test.Name : "Unknown Test",
+                        TestId = r.TestId.Value,
+                        TestName = r.Test != null ? r.Test.Name : "Unknown Test",
                         Score = r.Score,
-                        CompletedAt = r.CompletedAt ?? DateTime.MinValue
+                        CompletedAt = r.CompletedAt ?? DateTime.UtcNow
                     })
                     .ToListAsync();
+
+                return Ok(results);
             }
             catch (Exception ex)
             {

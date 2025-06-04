@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("APIPRA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1367de492d3b5feac2097cc7029eaa1ed33b85de")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba5af9a892cbdbe50939da84e04219b6b86a403a")]
 [assembly: System.Reflection.AssemblyProductAttribute("APIPRA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("APIPRA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
