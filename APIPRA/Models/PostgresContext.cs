@@ -30,6 +30,8 @@ public partial class PostgresContext : DbContext
     public virtual DbSet<Jobvacancy> Jobvacancies { get; set; }
 
     public virtual DbSet<Languagetest> Languagetests { get; set; }
+    public  DbSet<TestQuestion> TestQuestions { get; set; }
+
 
     public virtual DbSet<Legalarticle> Legalarticles { get; set; }
 
@@ -325,26 +327,39 @@ public partial class PostgresContext : DbContext
                 .HasColumnName("topic");
         });
 
-
         modelBuilder.Entity<Testimage>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("testimages_pkey");
 
             entity.ToTable("testimages");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id)
+                .HasColumnName("id")
+                .ValueGeneratedOnAdd();
+
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
-            entity.Property(e => e.Description).HasColumnName("description");
+
+            entity.Property(e => e.Description)
+                .HasColumnName("description");
+
             entity.Property(e => e.ImageUrl)
                 .HasMaxLength(255)
                 .HasColumnName("image_url");
-            entity.Property(e => e.TestId).HasColumnName("test_id");
 
-          
+            entity.Property(e => e.TestId)
+                .HasColumnName("test_id");
+
+            entity.HasOne(e => e.Test)          // навигационное свойство в Testimage
+                .WithMany(t => t.Testimages)   // коллекция в Languagetest
+                .HasForeignKey(e => e.TestId)
+                .HasConstraintName("fk_testimage_test")
+                .OnDelete(DeleteBehavior.Cascade); // добавил поведение удаления (опционально)
         });
+
+
 
         modelBuilder.Entity<User>(entity =>
         {

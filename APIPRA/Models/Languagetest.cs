@@ -7,5 +7,7 @@ public partial class Languagetest
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public virtual ICollection<Testimage> Testimages { get; set; } = new List<Testimage>();
+    public string Type { get; set; }
+    public ICollection<Testimage> Testimages { get; set; } = new List<Testimage>();
+
 }

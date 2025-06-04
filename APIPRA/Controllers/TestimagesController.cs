@@ -20,14 +20,25 @@ namespace APIPRA.Controllers
 
         // GET: api/Testimages
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Testimage>>> GetTestimages()
+        public async Task<ActionResult<IEnumerable<TestimageReadDto>>> GetTestimages()
         {
-            return await _context.Testimages.ToListAsync();
+            var testimages = await _context.Testimages.ToListAsync();
+
+            var result = testimages.Select(t => new TestimageReadDto
+            {
+                Id = t.Id,
+                CreatedAt = t.CreatedAt,
+                Description = t.Description,
+                ImageUrl = t.ImageUrl,
+                TestId = t.TestId
+            });
+
+            return Ok(result);
         }
 
         // GET: api/Testimages/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Testimage>> GetTestimage(int id)
+        public async Task<ActionResult<TestimageReadDto>> GetTestimage(int id)
         {
             var testimage = await _context.Testimages.FindAsync(id);
 
@@ -36,27 +47,58 @@ namespace APIPRA.Controllers
                 return NotFound();
             }
 
-            return testimage;
+            var result = new TestimageReadDto
+            {
+                Id = testimage.Id,
+                CreatedAt = testimage.CreatedAt,
+                Description = testimage.Description,
+                ImageUrl = testimage.ImageUrl,
+                TestId = testimage.TestId
+            };
+
+            return Ok(result);
         }
 
         // POST: api/Testimages
         [HttpPost]
-        public async Task<ActionResult<Testimage>> PostTestimage(Testimage testimage)
+        public async Task<ActionResult<TestimageReadDto>> PostTestimage(TestimageCreateDto dto)
         {
+            var testimage = new Testimage
+            {
+                Description = dto.Description,
+                ImageUrl = dto.ImageUrl,
+                TestId = dto.TestId
+            };
+
             _context.Testimages.Add(testimage);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTestimage), new { id = testimage.Id }, testimage);
+            var result = new TestimageReadDto
+            {
+                Id = testimage.Id,
+                CreatedAt = testimage.CreatedAt,
+                Description = testimage.Description,
+                ImageUrl = testimage.ImageUrl,
+                TestId = testimage.TestId
+            };
+
+            return CreatedAtAction(nameof(GetTestimage), new { id = testimage.Id }, result);
         }
 
         // PUT: api/Testimages/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTestimage(int id, Testimage testimage)
+        public async Task<IActionResult> PutTestimage(int id, TestimageCreateDto dto)
         {
-            if (id != testimage.Id)
+            var testimage = await _context.Testimages.FindAsync(id);
+
+            if (testimage == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            testimage.Description = dto.Description;
+            testimage.ImageUrl = dto.ImageUrl;
+            testimage.TestId = dto.TestId;
 
             _context.Entry(testimage).State = EntityState.Modified;
 
@@ -99,5 +141,22 @@ namespace APIPRA.Controllers
         {
             return _context.Testimages.Any(e => e.Id == id);
         }
+    }
+
+    // DTO классы можно вынести в отдельный файл, например, TestimageDto.cs
+    public class TestimageCreateDto
+    {
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public int TestId { get; set; }
+    }
+
+    public class TestimageReadDto
+    {
+        public int Id { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public int TestId { get; set; }
     }
 }
