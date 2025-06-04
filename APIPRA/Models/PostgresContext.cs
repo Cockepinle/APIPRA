@@ -234,12 +234,19 @@ public partial class PostgresContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("name");
 
+            // Добавляем маппинг для поля Type
+            entity.Property(e => e.Type)
+                .HasMaxLength(50)  // или сколько у тебя в БД
+                .HasColumnName("type")
+                .IsRequired();     // если колонка NOT NULL
+
             // Добавляем отношение к Testimages
             entity.HasMany(d => d.Testimages)
                 .WithOne()
                 .HasForeignKey(d => d.TestId)
                 .HasConstraintName("fk_testimage_languagetest");
         });
+
 
         modelBuilder.Entity<Legalarticle>(entity =>
         {
@@ -329,36 +336,72 @@ public partial class PostgresContext : DbContext
 
         modelBuilder.Entity<Testimage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("testimages_pkey");
-
             entity.ToTable("testimages");
+
+            // Первичный ключ
+            entity.HasKey(e => e.Id)
+                .HasName("testimages_pkey");
 
             entity.Property(e => e.Id)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd();
 
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("created_at");
+            // Внешний ключ на таблицу tests (предположительно Languagetest)
+            entity.Property(e => e.TestId)
+                .HasColumnName("test_id");
 
-            entity.Property(e => e.Description)
-                .HasColumnName("description");
+            entity.HasOne(e => e.Test)
+                .WithMany(t => t.Testimages)
+                .HasForeignKey(e => e.TestId)
+                .HasConstraintName("fk_testimage_test")
+                .OnDelete(DeleteBehavior.Cascade);
 
+            // Поле image_url
             entity.Property(e => e.ImageUrl)
+                .HasColumnName("image_url")
                 .HasMaxLength(255)
-                .HasColumnName("image_url");
+                .IsRequired();
+
+            // Поле metadata (jsonb)
+            entity.Property(e => e.Metadata)
+                .HasColumnName("metadata")
+                .HasColumnType("jsonb")
+                .IsRequired();
+
+            // Поле created_at
+            entity.Property(e => e.CreatedAt)
+                .HasColumnName("created_at")
+                .HasColumnType("timestamp without time zone")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        });
+
+        modelBuilder.Entity<TestQuestion>(entity =>
+        {
+            entity.ToTable("testquestions");
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Id)
+                .HasColumnName("id");
 
             entity.Property(e => e.TestId)
                 .HasColumnName("test_id");
 
-            entity.HasOne(e => e.Test)          // навигационное свойство в Testimage
-                .WithMany(t => t.Testimages)   // коллекция в Languagetest
-                .HasForeignKey(e => e.TestId)
-                .HasConstraintName("fk_testimage_test")
-                .OnDelete(DeleteBehavior.Cascade); // добавил поведение удаления (опционально)
-        });
+            entity.Property(e => e.Question)
+                .HasColumnName("question")
+                .IsRequired()
+                .HasMaxLength(1000); // Измени длину при необходимости
 
+            entity.Property(e => e.Answer)
+                .HasColumnName("answer")
+                .IsRequired()
+                .HasMaxLength(1000); // Измени при необходимости
+
+            entity.Property(e => e.QuestionType)
+                .HasColumnName("question_type")
+                .IsRequired()
+                .HasMaxLength(255); // Измени при необходимости
+        });
 
 
         modelBuilder.Entity<User>(entity =>

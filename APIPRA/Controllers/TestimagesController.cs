@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
+using System.Text.Json;
 
 namespace APIPRA.Controllers
 {
@@ -60,12 +61,15 @@ namespace APIPRA.Controllers
         }
 
         // POST: api/Testimages
+        // POST: api/Testimages
         [HttpPost]
         public async Task<ActionResult<TestimageReadDto>> PostTestimage(TestimageCreateDto dto)
         {
+            var metadataObj = new { description = dto.Description ?? "" };
+
             var testimage = new Testimage
             {
-                Description = dto.Description,
+                Metadata = JsonSerializer.Serialize(metadataObj),
                 ImageUrl = dto.ImageUrl,
                 TestId = dto.TestId
             };
@@ -77,7 +81,7 @@ namespace APIPRA.Controllers
             {
                 Id = testimage.Id,
                 CreatedAt = testimage.CreatedAt,
-                Description = testimage.Description,
+                Description = dto.Description,
                 ImageUrl = testimage.ImageUrl,
                 TestId = testimage.TestId
             };
@@ -96,7 +100,9 @@ namespace APIPRA.Controllers
                 return NotFound();
             }
 
-            testimage.Description = dto.Description;
+            var metadataObj = new { description = dto.Description ?? "" };
+            testimage.Metadata = JsonSerializer.Serialize(metadataObj);
+
             testimage.ImageUrl = dto.ImageUrl;
             testimage.TestId = dto.TestId;
 
@@ -119,7 +125,7 @@ namespace APIPRA.Controllers
             }
 
             return NoContent();
-        }
+        }       
 
         // DELETE: api/Testimages/5
         [HttpDelete("{id}")]

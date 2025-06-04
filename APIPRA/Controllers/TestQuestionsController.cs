@@ -32,7 +32,6 @@ namespace APIPRA.Controllers
         public async Task<ActionResult<TestQuestion>> PostQuestion(int testId, TestQuestion question)
         {
             question.TestId = testId;
-            question.CreatedAt = DateTime.UtcNow;
 
             _context.TestQuestions.Add(question);
             await _context.SaveChangesAsync();
