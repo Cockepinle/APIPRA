@@ -136,36 +136,42 @@ namespace APIPRA.Controllers
         // POST: api/tests/results
         [Authorize]
         [HttpPost("results")]
-        public async Task<ActionResult<TestResultResponseDto>> SubmitTestResult([FromBody] TestResultDto resultDto)
+        public async Task<ActionResult<TestResultResponseDto>> SubmitTestResult([FromBody] TestResultDto request)
         {
             try
             {
-                if (resultDto == null || resultDto.Answers == null)
-                {
-                    _logger.LogError("Invalid request data");
-                    return BadRequest("Invalid request data");
-                }
+                // Валидация
+                if (request == null) return BadRequest("Неверные данные");
+                if (request.Answers == null || !request.Answers.Any())
+                    return BadRequest("Необходимо указать ответы");
 
-                var userId = int.Parse(User.FindFirst("UserId")?.Value);
+                // Получаем пользователя
+                var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+                if (userId == 0) return Unauthorized();
 
-                // Проверка существования теста
-                var testExists = await _context.Languagetests.AnyAsync(t => t.Id == resultDto.TestId);
-                if (!testExists) return NotFound("Test not found");
+                // Проверяем тест
+                var test = await _context.Languagetests
+                    .Include(t => t.TestQuestions)
+                    .FirstOrDefaultAsync(t => t.Id == request.TestId);
 
-                // Получаем вопросы
-                var questions = await _context.TestQuestions
-                    .Where(q => q.TestId == resultDto.TestId)
-                    .ToListAsync();
+                if (test == null) return NotFound("Тест не найден");
 
                 // Подсчет баллов
-                int score = resultDto.Answers
-                    .Count(a => questions.Any(q => q.Id == a.QuestionId && q.Answer == a.Answer));
+                int score = 0;
+                foreach (var answer in request.Answers)
+                {
+                    var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
+                    if (question != null && question.Answer == answer.Answer)
+                    {
+                        score++;
+                    }
+                }
 
-                // Сохранение результата
+                // Сохраняем результат
                 var result = new Usertestresult
                 {
                     UserId = userId,
-                    TestId = resultDto.TestId,
+                    TestId = request.TestId,
                     Score = score,
                     CompletedAt = DateTime.UtcNow
                 };
@@ -177,14 +183,14 @@ namespace APIPRA.Controllers
                 {
                     Id = result.Id,
                     Score = score,
-                    TotalQuestions = questions.Count,
-                    CompletedAt = result.CompletedAt.Value
+                    TotalQuestions = test.TestQuestions.Count,
+                    CompletedAt = result.CompletedAt ?? DateTime.MinValue // или DateTime.UtcNow
                 });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error saving test result");
-                return StatusCode(500, "Internal server error");
+                _logger.LogError(ex, "SubmitTestResult error");
+                return StatusCode(500, "Внутренняя ошибка сервера");
             }
         }
         // GET: api/tests/{id}/questions
