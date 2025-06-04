@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace APIPRA.Controllers
 {
@@ -11,10 +12,12 @@ namespace APIPRA.Controllers
     public class TestsController : ControllerBase
     {
         private readonly PostgresContext _context;
+        private readonly ILogger<TestsController> _logger;
 
-        public TestsController(PostgresContext context)
+        public TestsController(PostgresContext context, ILogger<TestsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/tests
@@ -44,7 +47,7 @@ namespace APIPRA.Controllers
                         }
                         catch (JsonException ex)
                         {
-                            Console.WriteLine($"JSON parse error: {ex.Message}");
+                            _logger.LogError(ex, "JSON parse error");
                             testType = "standard";
                         }
                     }
@@ -63,8 +66,8 @@ namespace APIPRA.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                return StatusCode(500, ex.Message);
+                _logger.LogError(ex, "Error getting tests");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -108,9 +111,9 @@ namespace APIPRA.Controllers
                         }
                     }
                 }
-                catch (JsonException)
+                catch (JsonException ex)
                 {
-                    // Если metadata не JSON, оставляем дефолтные значения
+                    _logger.LogError(ex, "Error parsing metadata");
                 }
 
                 return new TestDetailDto
@@ -125,7 +128,7 @@ namespace APIPRA.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetTest: {ex}");
+                _logger.LogError(ex, "Error getting test");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -137,22 +140,17 @@ namespace APIPRA.Controllers
         {
             try
             {
-                var userId = int.Parse(User.Claims.First(c => c.Type == "UserId").Value);
+                var userId = int.Parse(User.FindFirst("UserId")?.Value);
 
-                // Рассчитываем score на основе ответов
+                // Получаем правильные ответы
                 var correctAnswers = await _context.TestQuestions
                     .Where(q => q.TestId == resultDto.TestId)
-                    .ToListAsync();
+                    .ToDictionaryAsync(q => q.Id, q => q.Answer);
 
-                int score = 0;
-                foreach (var userAnswer in resultDto.Answers)
-                {
-                    var question = correctAnswers.FirstOrDefault(q => q.Id == userAnswer.QuestionId);
-                    if (question != null && question.Answer == userAnswer.Answer)
-                    {
-                        score++;
-                    }
-                }
+                // Подсчет правильных ответов
+                int score = resultDto.Answers
+                    .Count(a => correctAnswers.TryGetValue(a.QuestionId, out var correctAnswer)
+                              && a.Answer == correctAnswer);
 
                 var result = new Usertestresult
                 {
@@ -165,22 +163,17 @@ namespace APIPRA.Controllers
                 _context.Usertestresults.Add(result);
                 await _context.SaveChangesAsync();
 
-                var testName = await _context.Languagetests
-                    .Where(t => t.Id == resultDto.TestId)
-                    .Select(t => t.Name)
-                    .FirstOrDefaultAsync();
-
                 return Ok(new TestResultResponseDto
                 {
-                    Id = result.Id,
-                    TestName = testName ?? "Unknown Test",
                     Score = score,
-                    CompletedAt = result.CompletedAt
+                    TotalQuestions = correctAnswers.Count,
+                    CompletedAt = result.CompletedAt ?? DateTime.MinValue // Явное преобразование с обработкой null
                 });
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.LogError(ex, "Error submitting test result");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -190,20 +183,28 @@ namespace APIPRA.Controllers
         [HttpGet("results/{id}")]
         public async Task<ActionResult<TestResultDetailDto>> GetTestResult(int id)
         {
-            var result = await _context.Usertestresults
-                .Include(r => r.Test)
-                .FirstOrDefaultAsync(r => r.Id == id);
-
-            if (result == null)
-                return NotFound();
-
-            return new TestResultDetailDto
+            try
             {
-                Id = result.Id,
-                TestName = result.Test?.Name ?? "Unknown Test",
-                Score = result.Score,
-                CompletedAt = result.CompletedAt
-            };
+                var result = await _context.Usertestresults
+                    .Include(r => r.Test)
+                    .FirstOrDefaultAsync(r => r.Id == id);
+
+                if (result == null)
+                    return NotFound();
+
+                return new TestResultDetailDto
+                {
+                    Id = result.Id,
+                    TestName = result.Test?.Name ?? "Unknown Test",
+                    Score = result.Score,
+                    CompletedAt = result.CompletedAt ?? DateTime.MinValue // Обработка null
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting test result");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // GET: api/tests/user/results
@@ -211,19 +212,27 @@ namespace APIPRA.Controllers
         [HttpGet("user/results")]
         public async Task<ActionResult<IEnumerable<TestResultDetailDto>>> GetUserResults()
         {
-            var userId = int.Parse(User.Claims.First(c => c.Type == "UserId").Value);
+            try
+            {
+                var userId = int.Parse(User.FindFirst("UserId")?.Value);
 
-            return await _context.Usertestresults
-                .Where(r => r.UserId == userId)
-                .Include(r => r.Test)
-                .Select(r => new TestResultDetailDto
-                {
-                    Id = r.Id,
-                    TestName = r.Test.Name,
-                    Score = r.Score,
-                    CompletedAt = r.CompletedAt
-                })
-                .ToListAsync();
+                return await _context.Usertestresults
+                    .Where(r => r.UserId == userId)
+                    .Include(r => r.Test)
+                    .Select(r => new TestResultDetailDto
+                    {
+                        Id = r.Id,
+                        TestName = r.Test.Name,
+                        Score = r.Score,
+                        CompletedAt = r.CompletedAt ?? DateTime.MinValue // Обработка null
+                    })
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting user results");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
