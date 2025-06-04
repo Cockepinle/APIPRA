@@ -29,7 +29,7 @@ namespace APIPRA.Controllers
             {
                 Id = t.Id,
                 Name = t.Name,
-                Description = t.Testimages.FirstOrDefault()?.Description,
+                Description = t.Testimages.FirstOrDefault()?.Description ?? string.Empty,
                 ImageUrl = t.Testimages.FirstOrDefault()?.ImageUrl,
                 TestType = t.Testimages.FirstOrDefault() != null
                     ? JsonSerializer.Deserialize<TestMetadata>(t.Testimages.First().Description)?.TestType
