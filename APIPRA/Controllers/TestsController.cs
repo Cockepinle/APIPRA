@@ -132,7 +132,66 @@ namespace APIPRA.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [Authorize]
+        [HttpPost("Submit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Submit([FromBody] TestResultDto request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid model state: {Errors}",
+                        string.Join(", ", ModelState.Values.SelectMany(v => v.Errors)));
+                    return BadRequest(ModelState);
+                }
 
+                var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+                if (userId == 0) return Unauthorized();
+
+                // Проверка существования теста и вопросов
+                var test = await _context.Languagetests
+                    .Include(t => t.TestQuestions)
+                    .FirstOrDefaultAsync(t => t.Id == request.TestId);
+
+                if (test == null) return NotFound("Тест не найден");
+
+                // Подсчёт баллов
+                int score = 0;
+                foreach (var answer in request.Answers)
+                {
+                    var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
+                    if (question != null && question.Answer.Equals(answer.Answer, StringComparison.OrdinalIgnoreCase))
+                    {
+                        score++;
+                    }
+                }
+
+                // Сохранение результата
+                var result = new Usertestresult
+                {
+                    UserId = userId,
+                    TestId = request.TestId,
+                    Score = score,
+                    CompletedAt = DateTime.UtcNow
+                };
+
+                _context.Usertestresults.Add(result);
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    testId = request.TestId,
+                    score,
+                    totalQuestions = test.TestQuestions.Count
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при сохранении теста");
+                return StatusCode(500, "Внутренняя ошибка сервера");
+            }
+        }
         // POST: api/tests/results
         [Authorize]
         [HttpPost("results")]
