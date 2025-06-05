@@ -43,8 +43,7 @@ namespace APIPRA.Controllers
                             TestId = q.TestId,
                             Question = q.Question,
                             Answer = q.Answer,
-                            QuestionType = q.QuestionType,
-                            Options = q.Options ?? new List<string>() // Защита от null
+                            QuestionType = q.QuestionType
                         }).ToList(),
                         Images = t.Testimages.ToList()
                     })
