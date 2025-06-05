@@ -71,128 +71,6 @@ namespace APIPRA.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
-        // GET: api/tests/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TestDetailDto>> GetTest(int id)
-        {
-            try
-            {
-                var test = await _context.Languagetests
-                    .Include(t => t.Testimages)
-                    .FirstOrDefaultAsync(t => t.Id == id);
-
-                if (test == null)
-                    return NotFound();
-
-                var testImage = test.Testimages?.FirstOrDefault();
-                if (testImage == null)
-                    return NotFound();
-
-                var questions = new List<QuestionDto>();
-                string testType = "standard";
-                string description = "Нет описания";
-
-                try
-                {
-                    if (!string.IsNullOrEmpty(testImage.Metadata))
-                    {
-                        var metadata = JsonSerializer.Deserialize<TestMetadata>(testImage.Metadata);
-                        if (metadata != null)
-                        {
-                            testType = metadata.TestType ?? "standard";
-                            questions = metadata.Questions?.Select(q => new QuestionDto
-                            {
-                                Question = q.Question,
-                                QuestionType = q.QuestionType,
-                                Answer = q.Answer
-                            }).ToList() ?? new List<QuestionDto>();
-
-                            description = metadata.Questions?.FirstOrDefault()?.Question ?? "Нет описания";
-                        }
-                    }
-                }
-                catch (JsonException ex)
-                {
-                    _logger.LogError(ex, "Error parsing metadata");
-                }
-
-                return new TestDetailDto
-                {
-                    Id = test.Id,
-                    Name = test.Name,
-                    Description = description,
-                    ImageUrl = testImage.ImageUrl,
-                    Questions = questions,
-                    TestType = testType
-                };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting test");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-        [Authorize]
-        [HttpPost("Submit")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Submit([FromBody] TestResultDto request)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    _logger.LogError("Invalid model state: {Errors}",
-                        string.Join(", ", ModelState.Values.SelectMany(v => v.Errors)));
-                    return BadRequest(ModelState);
-                }
-
-                var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
-                if (userId == 0) return Unauthorized();
-
-                // Проверка существования теста и вопросов
-                var test = await _context.Languagetests
-                    .Include(t => t.TestQuestions)
-                    .FirstOrDefaultAsync(t => t.Id == request.TestId);
-
-                if (test == null) return NotFound("Тест не найден");
-
-                // Подсчёт баллов
-                int score = 0;
-                foreach (var answer in request.Answers)
-                {
-                    var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
-                    if (question != null && question.Answer.Equals(answer.Answer, StringComparison.OrdinalIgnoreCase))
-                    {
-                        score++;
-                    }
-                }
-
-                // Сохранение результата
-                var result = new Usertestresult
-                {
-                    UserId = userId,
-                    TestId = request.TestId,
-                    Score = score,
-                    CompletedAt = DateTime.UtcNow
-                };
-
-                _context.Usertestresults.Add(result);
-                await _context.SaveChangesAsync();
-
-                return Ok(new
-                {
-                    testId = request.TestId,
-                    score,
-                    totalQuestions = test.TestQuestions.Count
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка при сохранении теста");
-                return StatusCode(500, "Внутренняя ошибка сервера");
-            }
-        }
         // POST: api/tests/results
         [Authorize]
         [HttpPost("results")]
@@ -374,5 +252,127 @@ namespace APIPRA.Controllers
                 }).ToList()
             };
         }
+        // GET: api/tests/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TestDetailDto>> GetTest(int id)
+        {
+            try
+            {
+                var test = await _context.Languagetests
+                    .Include(t => t.Testimages)
+                    .FirstOrDefaultAsync(t => t.Id == id);
+
+                if (test == null)
+                    return NotFound();
+
+                var testImage = test.Testimages?.FirstOrDefault();
+                if (testImage == null)
+                    return NotFound();
+
+                var questions = new List<QuestionDto>();
+                string testType = "standard";
+                string description = "Нет описания";
+
+                try
+                {
+                    if (!string.IsNullOrEmpty(testImage.Metadata))
+                    {
+                        var metadata = JsonSerializer.Deserialize<TestMetadata>(testImage.Metadata);
+                        if (metadata != null)
+                        {
+                            testType = metadata.TestType ?? "standard";
+                            questions = metadata.Questions?.Select(q => new QuestionDto
+                            {
+                                Question = q.Question,
+                                QuestionType = q.QuestionType,
+                                Answer = q.Answer
+                            }).ToList() ?? new List<QuestionDto>();
+
+                            description = metadata.Questions?.FirstOrDefault()?.Question ?? "Нет описания";
+                        }
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    _logger.LogError(ex, "Error parsing metadata");
+                }
+
+                return new TestDetailDto
+                {
+                    Id = test.Id,
+                    Name = test.Name,
+                    Description = description,
+                    ImageUrl = testImage.ImageUrl,
+                    Questions = questions,
+                    TestType = testType
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting test");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+       /* [Authorize]
+        [HttpPost("Submit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Submit([FromBody] TestResultDto request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid model state: {Errors}",
+                        string.Join(", ", ModelState.Values.SelectMany(v => v.Errors)));
+                    return BadRequest(ModelState);
+                }
+
+                var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+                if (userId == 0) return Unauthorized();
+
+                // Проверка существования теста и вопросов
+                var test = await _context.Languagetests
+                    .Include(t => t.TestQuestions)
+                    .FirstOrDefaultAsync(t => t.Id == request.TestId);
+
+                if (test == null) return NotFound("Тест не найден");
+
+                // Подсчёт баллов
+                int score = 0;
+                foreach (var answer in request.Answers)
+                {
+                    var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
+                    if (question != null && question.Answer.Equals(answer.Answer, StringComparison.OrdinalIgnoreCase))
+                    {
+                        score++;
+                    }
+                }
+
+                // Сохранение результата
+                var result = new Usertestresult
+                {
+                    UserId = userId,
+                    TestId = request.TestId,
+                    Score = score,
+                    CompletedAt = DateTime.UtcNow
+                };
+
+                _context.Usertestresults.Add(result);
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    testId = request.TestId,
+                    score,
+                    totalQuestions = test.TestQuestions.Count
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при сохранении теста");
+                return StatusCode(500, "Внутренняя ошибка сервера");
+            }
+        }
+       */
     }
 }
