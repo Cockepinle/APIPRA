@@ -81,7 +81,7 @@ namespace APIPRA.Controllers
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
                 if (userId == 0) return Unauthorized();
 
-                // Проверяем существование теста и вопросов
+                // Получаем тест с вопросами
                 var test = await _context.Languagetests
                     .Include(t => t.TestQuestions)
                     .FirstOrDefaultAsync(t => t.Id == request.TestId);
@@ -93,12 +93,12 @@ namespace APIPRA.Controllers
                 {
                     UserId = userId,
                     TestId = request.TestId,
-                    Score = 0,
+                    Score = 0, // Пока 0, будем увеличивать
                     CompletedAt = DateTime.UtcNow
                 };
 
                 _context.Usertestresults.Add(testResult);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); // Сохраняем, чтобы получить ID
 
                 // Обрабатываем каждый ответ
                 foreach (var answer in request.Answers)
@@ -110,16 +110,18 @@ namespace APIPRA.Controllers
 
                     if (isCorrect) testResult.Score++;
 
+                    // Сохраняем ответ пользователя
                     _context.UserAnswers.Add(new UserAnswer
                     {
                         UserTestResultId = testResult.Id,
                         QuestionId = answer.QuestionId,
                         UserAnswerText = answer.Answer,
-                        IsCorrect = isCorrect
+                        IsCorrect = isCorrect,
+                        CreatedAt = DateTime.UtcNow
                     });
                 }
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); // Сохраняем все изменения
 
                 return Ok(new TestResultResponseDto
                 {
