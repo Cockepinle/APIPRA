@@ -29,28 +29,33 @@ namespace APIPRA.Controllers
         [HttpGet("quiz")]
         public async Task<ActionResult<IEnumerable<LanguageTestWithQuestions>>> GetQuizTests()
         {
-            // Загружаем все тесты типа quiz
-            var tests = await _context.Languagetests
-                .Where(t => t.Type == "quiz")
-                .ToListAsync();
-
-            // Для каждого теста находим его вопросы
-            var testIds = tests.Select(t => t.Id).ToList();
-
-            var questions = await _context.TestQuestions
-                .Where(q => testIds.Contains(q.TestId))
-                .ToListAsync();
-
-            var results = tests.Select(t => new LanguageTestWithQuestions
+            try
             {
-                Test = t,
-                Questions = questions.Where(q => q.TestId == t.Id).ToList(),
-                Images = new List<Testimage>() // позже можно подгрузить изображения
-            }).ToList();
+                // Загружаем тесты и ВОПРОСЫ вместе через Include
+                var testsWithQuestions = await _context.Languagetests
+                    .Where(t => t.Type == "quiz")
+                    .Include(t => t.TestQuestions) // Важно: должно быть навигационное свойство
+                    .Select(t => new LanguageTestWithQuestions
+                    {
+                        Test = t,
+                        Questions = t.TestQuestions.ToList(),
+                        Images = t.Testimages.ToList()
+                    })
+                    .ToListAsync();
 
-            return results;
+                if (!testsWithQuestions.Any())
+                {
+                    return NotFound("No quiz tests found");
+                }
+
+                return Ok(testsWithQuestions);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetQuizTests: {ex}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
-
 
         // GET: api/LanguageTests/5 - конкретный тест с вопросами
         [HttpGet("{id}")]

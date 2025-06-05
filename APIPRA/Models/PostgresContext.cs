@@ -275,36 +275,30 @@ public partial class PostgresContext : DbContext
         modelBuilder.Entity<Languagetest>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("languagetests_pkey");
-
             entity.ToTable("languagetests");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .HasColumnName("name");
+            entity.Property(e => e.Type)
+                .HasMaxLength(50)
+                .HasColumnName("type")
+                .IsRequired();
 
+            // Конфигурация для вопросов
             entity.HasMany(t => t.TestQuestions)
-            .WithOne(q => q.Test)
-            .HasForeignKey(q => q.TestId)
-            .OnDelete(DeleteBehavior.Cascade); // Каскадное удаление вопросов при удалении теста
-
-            // Настройка связи с изображениями (если ещё не настроено)
-            entity.HasMany(t => t.Testimages)
-                .WithOne(i => i.Test)
-                .HasForeignKey(i => i.TestId)
+                .WithOne(q => q.Test)
+                .HasForeignKey(q => q.TestId)
+                .HasConstraintName("fk_testquestion_languagetest") // Добавляем имя constraint
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Добавляем маппинг для поля Type
-            entity.Property(e => e.Type)
-                .HasMaxLength(50)  // или сколько у тебя в БД
-                .HasColumnName("type")
-                .IsRequired();     // если колонка NOT NULL
-
-            // Добавляем отношение к Testimages
-            entity.HasMany(d => d.Testimages)
-                .WithOne()
-                .HasForeignKey(d => d.TestId)
-                .HasConstraintName("fk_testimage_languagetest");
+            // Конфигурация для изображений (у вас было дублирование)
+            entity.HasMany(t => t.Testimages)
+                .WithOne(i => i.Test) // Добавляем навигационное свойство
+                .HasForeignKey(i => i.TestId)
+                .HasConstraintName("fk_testimage_languagetest")
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
 
