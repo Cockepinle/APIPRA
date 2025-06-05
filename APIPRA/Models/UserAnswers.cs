@@ -12,7 +12,10 @@
 
         public string UserAnswerText { get; set; }
         public bool IsCorrect { get; set; }
+
         public DateTime CreatedAt { get; set; }
     }
 
 }
+
+
