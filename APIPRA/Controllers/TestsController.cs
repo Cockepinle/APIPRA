@@ -138,60 +138,58 @@ namespace APIPRA.Controllers
         [HttpPost("results")]
         public async Task<ActionResult<TestResultResponseDto>> SubmitTestResult([FromBody] TestResultDto request)
         {
-            try
+            _logger.LogInformation("Запрос: {Request}", JsonSerializer.Serialize(request));
+
+            if (request == null) return BadRequest("Нет данных");
+            if (request.Answers == null || !request.Answers.Any())
+                return BadRequest("Нет ответов");
+
+            var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+            if (userId == 0) return Unauthorized();
+
+            // Проверяем, что тест и вопросы существуют
+            var test = await _context.Languagetests
+                .Include(t => t.TestQuestions)
+                .FirstOrDefaultAsync(t => t.Id == request.TestId);
+
+            if (test == null) return NotFound("Тест не найден");
+            if (test.TestQuestions == null || !test.TestQuestions.Any())
+                return BadRequest("Тест без вопросов");
+
+            // Считаем баллы
+            int score = 0;
+            foreach (var answer in request.Answers)
             {
-                // Валидация
-                if (request == null) return BadRequest("Неверные данные");
-                if (request.Answers == null || !request.Answers.Any())
-                    return BadRequest("Необходимо указать ответы");
-
-                // Получаем пользователя
-                var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
-                if (userId == 0) return Unauthorized();
-
-                // Проверяем тест
-                var test = await _context.Languagetests
-                    .Include(t => t.TestQuestions)
-                    .FirstOrDefaultAsync(t => t.Id == request.TestId);
-
-                if (test == null) return NotFound("Тест не найден");
-
-                // Подсчет баллов
-                int score = 0;
-                foreach (var answer in request.Answers)
+                var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
+                if (question == null)
                 {
-                    var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
-                    if (question != null && question.Answer == answer.Answer)
-                    {
-                        score++;
-                    }
+                    _logger.LogError($"Вопрос {answer.QuestionId} не найден");
+                    continue;
                 }
 
-                // Сохраняем результат
-                var result = new Usertestresult
-                {
-                    UserId = userId,
-                    TestId = request.TestId,
-                    Score = score,
-                    CompletedAt = DateTime.UtcNow
-                };
-
-                _context.Usertestresults.Add(result);
-                await _context.SaveChangesAsync();
-
-                return Ok(new TestResultResponseDto
-                {
-                    Id = result.Id,
-                    Score = score,
-                    TotalQuestions = test.TestQuestions.Count,
-                    CompletedAt = result.CompletedAt ?? DateTime.MinValue
-                });
+                if (question.Answer == answer.Answer)
+                    score++;
             }
-            catch (Exception ex)
+
+            // Сохраняем результат
+            var dbResult = new Usertestresult
             {
-                _logger.LogError(ex, "SubmitTestResult error");
-                return StatusCode(500, "Внутренняя ошибка сервера");
-            }
+                UserId = userId,
+                TestId = request.TestId,
+                Score = score,
+                CompletedAt = DateTime.UtcNow
+            };
+
+            _context.Usertestresults.Add(dbResult);
+            await _context.SaveChangesAsync();
+
+            return Ok(new TestResultResponseDto
+            {
+                Id = dbResult.Id,
+                Score = score,
+                TotalQuestions = test.TestQuestions.Count,
+                CompletedAt = dbResult.CompletedAt.Value
+            });
         }
         // GET: api/tests/{id}/questions
         [HttpGet("{id}/questions")]
