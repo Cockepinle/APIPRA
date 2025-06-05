@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace APIPRA.Controllers
 {
@@ -197,58 +198,64 @@ namespace APIPRA.Controllers
         [HttpPost("results")]
         public async Task<ActionResult<TestResultResponseDto>> SubmitTestResult([FromBody] TestResultDto request)
         {
-            _logger.LogInformation("Запрос: {Request}", JsonSerializer.Serialize(request));
-
-            if (request == null) return BadRequest("Нет данных");
-            if (request.Answers == null || !request.Answers.Any())
-                return BadRequest("Нет ответов");
-
-            var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
-            if (userId == 0) return Unauthorized();
-
-            // Проверяем, что тест и вопросы существуют
-            var test = await _context.Languagetests
-                .Include(t => t.TestQuestions)
-                .FirstOrDefaultAsync(t => t.Id == request.TestId);
-
-            if (test == null) return NotFound("Тест не найден");
-            if (test.TestQuestions == null || !test.TestQuestions.Any())
-                return BadRequest("Тест без вопросов");
-
-            // Считаем баллы
-            int score = 0;
-            foreach (var answer in request.Answers)
+            try
             {
-                var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
-                if (question == null)
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+                if (userId == 0) return Unauthorized();
+
+                // Проверяем существование теста и вопросов
+                var test = await _context.Languagetests
+                    .Include(t => t.TestQuestions)
+                    .FirstOrDefaultAsync(t => t.Id == request.TestId);
+
+                if (test == null) return NotFound("Test not found");
+
+                // Создаем запись о результате теста
+                var testResult = new Usertestresult
                 {
-                    _logger.LogError($"Вопрос {answer.QuestionId} не найден");
-                    continue;
+                    UserId = userId,
+                    TestId = request.TestId,
+                    Score = 0,
+                    CompletedAt = DateTime.UtcNow
+                };
+
+                _context.Usertestresults.Add(testResult);
+                await _context.SaveChangesAsync();
+
+                // Обрабатываем каждый ответ
+                foreach (var answer in request.Answers)
+                {
+                    var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
+                    if (question == null) continue;
+
+                    bool isCorrect = question.Answer.Equals(answer.Answer, StringComparison.OrdinalIgnoreCase);
+
+                    if (isCorrect) testResult.Score++;
+
+                    _context.UserAnswers.Add(new UserAnswer
+                    {
+                        UserTestResultId = testResult.Id,
+                        QuestionId = answer.QuestionId,
+                        UserAnswerText = answer.Answer,
+                        IsCorrect = isCorrect
+                    });
                 }
 
-                if (question.Answer == answer.Answer)
-                    score++;
+                await _context.SaveChangesAsync();
+
+                return Ok(new TestResultResponseDto
+                {
+                    Id = testResult.Id,
+                    Score = testResult.Score,
+                    TotalQuestions = test.TestQuestions.Count,
+                    CompletedAt = testResult.CompletedAt.Value
+                });
             }
-
-            // Сохраняем результат
-            var dbResult = new Usertestresult
+            catch (Exception ex)
             {
-                UserId = userId,
-                TestId = request.TestId,
-                Score = score,
-                CompletedAt = DateTime.UtcNow
-            };
-
-            _context.Usertestresults.Add(dbResult);
-            await _context.SaveChangesAsync();
-
-            return Ok(new TestResultResponseDto
-            {
-                Id = dbResult.Id,
-                Score = score,
-                TotalQuestions = test.TestQuestions.Count,
-                CompletedAt = dbResult.CompletedAt.Value
-            });
+                _logger.LogError(ex, "Error submitting test results");
+                return StatusCode(500, "Internal server error");
+            }
         }
         // GET: api/tests/{id}/questions
         [HttpGet("{id}/questions")]
@@ -275,7 +282,7 @@ namespace APIPRA.Controllers
                     .Select(r => new TestResultDetailDto
                     {
                         Id = r.Id,
-                        TestId = r.TestId.Value,
+                        TestId = r.TestId,
                         TestName = r.Test != null ? r.Test.Name : "Unknown Test",
                         Score = r.Score,
                         CompletedAt = r.CompletedAt ?? DateTime.UtcNow
@@ -334,6 +341,36 @@ namespace APIPRA.Controllers
                     QuestionId = q.Id,
                     QuestionText = q.Question,
                     CorrectAnswer = q.Answer
+                }).ToList()
+            };
+        }
+        [Authorize]
+        [HttpGet("results/{resultId}")]
+        public async Task<ActionResult<TestResultDetailsDto>> GetTestResultDetails(int resultId)
+        {
+            var result = await _context.Usertestresults
+                .Include(r => r.Test)
+                .Include(r => r.UserAnswers)
+                    .ThenInclude(ua => ua.Question)
+                .FirstOrDefaultAsync(r => r.Id == resultId);
+
+            if (result == null) return NotFound();
+
+            return new TestResultDetailsDto
+            {
+                Id = result.Id,
+                TestId = result.TestId,
+                TestName = result.Test?.Name ?? "Unknown Test",
+                Score = result.Score,
+                TotalQuestions = result.UserAnswers.Count,
+                CompletedAt = result.CompletedAt ?? DateTime.MinValue,
+                Questions = result.UserAnswers.Select(ua => new QuestionResultDto
+                {
+                    QuestionId = ua.QuestionId,
+                    QuestionText = ua.Question.Question,
+                    CorrectAnswer = ua.Question.Answer,
+                    UserAnswer = ua.UserAnswerText,
+                    IsCorrect = ua.IsCorrect
                 }).ToList()
             };
         }

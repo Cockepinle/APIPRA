@@ -32,6 +32,7 @@ public partial class PostgresContext : DbContext
     public virtual DbSet<Languagetest> Languagetests { get; set; }
     public  DbSet<TestQuestion> TestQuestions { get; set; }
 
+    public DbSet<UserAnswer> UserAnswers { get; set; }
 
     public virtual DbSet<Legalarticle> Legalarticles { get; set; }
 
@@ -120,6 +121,49 @@ public partial class PostgresContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("forumposts_user_id_fkey");
         });
+
+        modelBuilder.Entity<UserAnswer>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("useranswers_pkey");
+
+            entity.ToTable("useranswers");
+
+            entity.Property(e => e.Id)
+                .HasColumnName("id")
+                .UseIdentityAlwaysColumn(); // Для SERIAL в PostgreSQL
+
+            entity.Property(e => e.UserTestResultId)
+                .HasColumnName("user_test_result_id");
+
+            entity.Property(e => e.QuestionId)
+                .HasColumnName("question_id");
+
+            entity.Property(e => e.UserAnswerText)
+                .IsRequired()
+                .HasColumnName("user_answer");
+
+            entity.Property(e => e.IsCorrect)
+                .IsRequired()
+                .HasColumnName("is_correct");
+
+            entity.Property(e => e.CreatedAt)
+                .HasColumnName("created_at")
+                .HasColumnType("timestamp with time zone")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAdd();
+
+            entity.HasOne(d => d.UserTestResult)
+                .WithMany(p => p.UserAnswers)
+                .HasForeignKey(d => d.UserTestResultId)
+                .HasConstraintName("useranswers_user_test_result_id_fkey");
+
+            entity.HasOne(d => d.Question)
+                .WithMany()
+                .HasForeignKey(d => d.QuestionId)
+                .HasConstraintName("useranswers_question_id_fkey");
+        });
+
+
 
         modelBuilder.Entity<Forumreply>(entity =>
         {
