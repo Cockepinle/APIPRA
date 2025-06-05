@@ -452,14 +452,7 @@ public partial class PostgresContext : DbContext
                 .IsRequired()
                 .HasMaxLength(255);
 
-            // Добавляем конфигурацию для Options (храним как JSON в базе)
-            entity.Property(e => e.Options)
-                .HasColumnName("options")
-                .HasConversion(
-                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                    v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null))
-                .HasColumnType("jsonb");
-
+           
             // Настройка связей
             entity.HasOne(tq => tq.Test)
                 .WithMany(t => t.TestQuestions)
