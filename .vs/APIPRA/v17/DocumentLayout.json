@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\alepi\\source\\repos\\APIPR\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\useranswers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\useranswers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\usertestresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\usertestresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\controllers\\languagetestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\controllers\\languagetestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\postgrescontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\postgrescontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\usertestresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\usertestresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\testquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -61,10 +65,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\testmetadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\testmetadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\useranswers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|solutionrelative:apipra\\models\\useranswers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4F249A45-1AE0-4EF9-9039-864C4551FA09}|APIPRA\\APIPRA.csproj|c:\\users\\alepi\\source\\repos\\apipr\\apipra\\models\\testresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -266,7 +266,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 17,
           "Children": [
             {
               "$type": "Bookmark",
@@ -326,7 +326,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "LanguagetestsController.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Controllers\\LanguagetestsController.cs",
               "RelativeDocumentMoniker": "APIPRA\\Controllers\\LanguagetestsController.cs",
@@ -340,19 +340,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "TestQuestion.cs",
-              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\TestQuestion.cs",
-              "RelativeDocumentMoniker": "APIPRA\\Models\\TestQuestion.cs",
-              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\TestQuestion.cs",
-              "RelativeToolTip": "APIPRA\\Models\\TestQuestion.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T18:12:28.915Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "PostgresContext.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\PostgresContext.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\PostgresContext.cs",
@@ -360,25 +347,49 @@
               "RelativeToolTip": "APIPRA\\Models\\PostgresContext.cs",
               "ViewState": "AQIAAKsBAAAAAAAAAAAhwMwBAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T18:49:28.805Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-29T18:49:28.805Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Usertestresult.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\Usertestresult.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\Usertestresult.cs",
               "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\Usertestresult.cs",
               "RelativeToolTip": "APIPRA\\Models\\Usertestresult.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAVAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T18:12:58.064Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserAnswers.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\UserAnswers.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\UserAnswers.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\UserAnswers.cs",
+              "RelativeToolTip": "APIPRA\\Models\\UserAnswers.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T08:46:04.738Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "TestQuestion.cs",
+              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\TestQuestion.cs",
+              "RelativeDocumentMoniker": "APIPRA\\Models\\TestQuestion.cs",
+              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\TestQuestion.cs",
+              "RelativeToolTip": "APIPRA\\Models\\TestQuestion.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-31T18:12:28.915Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "TestQuestionsController.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Controllers\\TestQuestionsController.cs",
               "RelativeDocumentMoniker": "APIPRA\\Controllers\\TestQuestionsController.cs",
@@ -386,12 +397,11 @@
               "RelativeToolTip": "APIPRA\\Controllers\\TestQuestionsController.cs",
               "ViewState": "AQIAADUAAAAAAAAAAAAAwE0AAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T11:14:38.001Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T11:14:38.001Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "TestsController.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Controllers\\TestsController.cs",
               "RelativeDocumentMoniker": "APIPRA\\Controllers\\TestsController.cs",
@@ -399,12 +409,11 @@
               "RelativeToolTip": "APIPRA\\Controllers\\TestsController.cs",
               "ViewState": "AQIAAHoAAAAAAAAAAAAAwKgAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T18:11:00.81Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T18:11:00.81Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Testimage.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\Testimage.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\Testimage.cs",
@@ -416,7 +425,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Program.cs",
               "RelativeDocumentMoniker": "APIPRA\\Program.cs",
@@ -428,7 +437,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Languagetest.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\Languagetest.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\Languagetest.cs",
@@ -440,7 +449,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "QuestionAnswerDto.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\QuestionAnswerDto.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\QuestionAnswerDto.cs",
@@ -452,7 +461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "LegalarticlesController.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Controllers\\LegalarticlesController.cs",
               "RelativeDocumentMoniker": "APIPRA\\Controllers\\LegalarticlesController.cs",
@@ -464,7 +473,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "APIPRA\\Controllers\\UsersController.cs",
@@ -476,7 +485,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "QuestionDto.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\QuestionDto.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\QuestionDto.cs",
@@ -488,7 +497,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "TestQuestionMetadata.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\TestQuestionMetadata.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\TestQuestionMetadata.cs",
@@ -500,7 +509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "TestMetadata.cs",
               "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\TestMetadata.cs",
               "RelativeDocumentMoniker": "APIPRA\\Models\\TestMetadata.cs",
@@ -509,18 +518,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T18:29:23.776Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "UserAnswers.cs",
-              "DocumentMoniker": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\UserAnswers.cs",
-              "RelativeDocumentMoniker": "APIPRA\\Models\\UserAnswers.cs",
-              "ToolTip": "C:\\Users\\alepi\\source\\repos\\APIPR\\APIPRA\\Models\\UserAnswers.cs",
-              "RelativeToolTip": "APIPRA\\Models\\UserAnswers.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:46:04.738Z"
             },
             {
               "$type": "Document",

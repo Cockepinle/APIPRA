@@ -20,12 +20,21 @@ namespace APIPRA.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TestQuestion>>> GetQuestions(int testId)
         {
-            var questions = await _context.TestQuestions
-                .Where(q => q.TestId == testId)
-                .ToListAsync();
+            try
+            {
+                var questions = await _context.TestQuestions
+                    .Where(q => q.TestId == testId)
+                    .ToListAsync();
 
-            return Ok(questions);
+                return Ok(questions);
+            }
+            catch (Exception ex)
+            {
+                // Логировать ex
+                return StatusCode(500, "Ошибка сервера при получении вопросов");
+            }
         }
+
 
         // POST: api/tests/{testId}/questions
         [HttpPost]
@@ -36,7 +45,7 @@ namespace APIPRA.Controllers
             _context.TestQuestions.Add(question);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetQuestionById), new { testId = testId, id = question.TestId }, question);
+            return CreatedAtAction(nameof(GetQuestionById), new { testId = testId, id = question.Id }, question);
         }
 
         // GET: api/tests/{testId}/questions/{id}
