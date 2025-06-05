@@ -80,11 +80,12 @@ namespace APIPRA.Controllers
             {
                 var test = await _context.Languagetests
                     .Include(t => t.Testimages)
+                    .Include(t => t.TestQuestions) // Добавить Include если есть навигационное свойство
                     .FirstOrDefaultAsync(t => t.Id == id);
 
                 if (test == null)
                     return NotFound();
-
+             
                 var testImage = test.Testimages?.FirstOrDefault();
                 if (testImage == null)
                     return NotFound();

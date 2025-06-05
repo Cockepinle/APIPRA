@@ -27,12 +27,30 @@ namespace APIPRA.Controllers
 
         // GET: api/LanguageTests/quiz - только тесты типа quiz
         [HttpGet("quiz")]
-        public async Task<ActionResult<IEnumerable<Languagetest>>> GetQuizTests()
+        public async Task<ActionResult<IEnumerable<LanguageTestWithQuestions>>> GetQuizTests()
         {
-            return await _context.Languagetests
+            // Загружаем все тесты типа quiz
+            var tests = await _context.Languagetests
                 .Where(t => t.Type == "quiz")
                 .ToListAsync();
+
+            // Для каждого теста находим его вопросы
+            var testIds = tests.Select(t => t.Id).ToList();
+
+            var questions = await _context.TestQuestions
+                .Where(q => testIds.Contains(q.TestId))
+                .ToListAsync();
+
+            var results = tests.Select(t => new LanguageTestWithQuestions
+            {
+                Test = t,
+                Questions = questions.Where(q => q.TestId == t.Id).ToList(),
+                Images = new List<Testimage>() // позже можно подгрузить изображения
+            }).ToList();
+
+            return results;
         }
+
 
         // GET: api/LanguageTests/5 - конкретный тест с вопросами
         [HttpGet("{id}")]
@@ -89,5 +107,7 @@ namespace APIPRA.Controllers
     {
         public Languagetest Test { get; set; }
         public List<TestQuestion> Questions { get; set; }
+        public List<Testimage> Images { get; set; }
     }
+
 }
