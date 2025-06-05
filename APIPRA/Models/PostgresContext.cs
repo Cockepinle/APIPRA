@@ -454,11 +454,11 @@ public partial class PostgresContext : DbContext
 
             // Добавляем конфигурацию для Options (храним как JSON в базе)
             entity.Property(e => e.Options)
-            .HasColumnName("options")
-            .HasConversion(
-                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null), // сериализация в JSON строку
-                v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)) // десериализация из JSON строки
-            .HasColumnType("jsonb");
+                .HasColumnName("options")
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null))
+                .HasColumnType("jsonb");
 
             // Настройка связей
             entity.HasOne(tq => tq.Test)

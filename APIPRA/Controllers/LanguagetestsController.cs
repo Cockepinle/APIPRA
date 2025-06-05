@@ -31,29 +31,35 @@ namespace APIPRA.Controllers
         {
             try
             {
-                // Загружаем тесты и ВОПРОСЫ вместе через Include
                 var testsWithQuestions = await _context.Languagetests
                     .Where(t => t.Type == "quiz")
-                    .Include(t => t.TestQuestions) // Важно: должно быть навигационное свойство
+                    .Include(t => t.TestQuestions)
                     .Select(t => new LanguageTestWithQuestions
                     {
                         Test = t,
-                        Questions = t.TestQuestions.ToList(),
+                        Questions = t.TestQuestions.Select(q => new TestQuestion
+                        {
+                            Id = q.Id,
+                            TestId = q.TestId,
+                            Question = q.Question,
+                            Answer = q.Answer,
+                            QuestionType = q.QuestionType,
+                            Options = q.Options ?? new List<string>() // Защита от null
+                        }).ToList(),
                         Images = t.Testimages.ToList()
                     })
+                    .AsNoTracking()
                     .ToListAsync();
-
-                if (!testsWithQuestions.Any())
-                {
-                    return NotFound("No quiz tests found");
-                }
 
                 return Ok(testsWithQuestions);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetQuizTests: {ex}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    error = ex.Message,
+                    details = "Check if 'options' column exists in database"
+                });
             }
         }
 
