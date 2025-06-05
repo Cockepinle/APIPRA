@@ -4,9 +4,8 @@ namespace APIPRA.Models
 {
     public class TestMetadata
     {
-        public string TestType { get; set; } // "multiple-choice", "crossword", "fill-in"
-        public List<TestQuestion> Questions { get; set; }
+        public string TestType { get; set; }
+        public List<TestQuestionMetadata> Questions { get; set; }
     }
 
-    
 }

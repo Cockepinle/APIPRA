@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIPRA.Models;
@@ -452,12 +453,30 @@ public partial class PostgresContext : DbContext
                 .IsRequired()
                 .HasMaxLength(1000);
 
-            entity.Property(e => e.QuestionType) // <-- вот тут правильно
+            entity.Property(e => e.QuestionType)
                 .HasColumnName("question_type")
                 .IsRequired()
                 .HasMaxLength(255);
-        });
 
+            // Добавляем конфигурацию для Options (храним как JSON в базе)
+            entity.Property(e => e.Options)
+            .HasColumnName("options")
+            .HasConversion(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null), // сериализация в JSON строку
+                v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)) // десериализация из JSON строки
+            .HasColumnType("jsonb");
+
+            // Настройка связей
+            entity.HasOne(tq => tq.Test)
+                .WithMany(t => t.TestQuestions)
+                .HasForeignKey(tq => tq.TestId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasMany(tq => tq.UserAnswers)
+                .WithOne(ua => ua.Question)
+                .HasForeignKey(ua => ua.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
 
         modelBuilder.Entity<User>(entity =>
         {

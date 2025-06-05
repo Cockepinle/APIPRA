@@ -71,200 +71,7 @@ namespace APIPRA.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        // POST: api/tests/results
-        [Authorize]
-        [HttpPost("results")]
-        public async Task<ActionResult<TestResultResponseDto>> SubmitTestResult([FromBody] TestResultDto request)
-        {
-            try
-            {
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
-                if (userId == 0) return Unauthorized();
-
-                // Получаем тест с вопросами
-                var test = await _context.Languagetests
-                    .Include(t => t.TestQuestions)
-                    .FirstOrDefaultAsync(t => t.Id == request.TestId);
-
-                if (test == null) return NotFound("Test not found");
-
-                // Создаем запись о результате теста
-                var testResult = new Usertestresult
-                {
-                    UserId = userId,
-                    TestId = request.TestId,
-                    Score = 0, // Пока 0, будем увеличивать
-                    CompletedAt = DateTime.UtcNow
-                };
-
-                _context.Usertestresults.Add(testResult);
-                await _context.SaveChangesAsync(); // Сохраняем, чтобы получить ID
-
-                // Обрабатываем каждый ответ
-                foreach (var answer in request.Answers)
-                {
-                    var question = test.TestQuestions.FirstOrDefault(q => q.Id == answer.QuestionId);
-                    if (question == null) continue;
-
-                    bool isCorrect = question.Answer.Equals(answer.Answer, StringComparison.OrdinalIgnoreCase);
-
-                    if (isCorrect) testResult.Score++;
-
-                    // Сохраняем ответ пользователя
-                    _context.UserAnswers.Add(new UserAnswer
-                    {
-                        UserTestResultId = testResult.Id,
-                        QuestionId = answer.QuestionId,
-                        UserAnswerText = answer.Answer,
-                        IsCorrect = isCorrect,
-                        CreatedAt = DateTime.UtcNow
-                    });
-                }
-
-                await _context.SaveChangesAsync(); // Сохраняем все изменения
-
-                return Ok(new TestResultResponseDto
-                {
-                    Id = testResult.Id,
-                    Score = testResult.Score,
-                    TotalQuestions = test.TestQuestions.Count,
-                    CompletedAt = testResult.CompletedAt.Value
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error submitting test results");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-        // GET: api/tests/{id}/questions
-        [HttpGet("{id}/questions")]
-        public async Task<ActionResult<IEnumerable<TestQuestion>>> GetTestQuestions(int id)
-        {
-            try
-            {
-                var questions = await _context.TestQuestions
-                    .Where(q => q.TestId == id)
-                    .ToListAsync();
-
-                return Ok(questions);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка при получении вопросов для теста с ID {TestId}", id);
-                return StatusCode(500, "Ошибка сервера при получении вопросов");
-            }
-        }
-
-
-        // GET: api/tests/user/results
-        [Authorize]
-        [HttpGet("user/results")]
-        public async Task<ActionResult<IEnumerable<TestResultDetailDto>>> GetUserResults()
-        {
-            try
-            {
-                var userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
-                if (userId == 0) return Unauthorized();
-
-                var results = await _context.Usertestresults
-                    .Where(r => r.UserId == userId && r.TestId != null)
-                    .Include(r => r.Test)
-                    .Select(r => new TestResultDetailDto
-                    {
-                        Id = r.Id,
-                        TestId = r.TestId,
-                        TestName = r.Test != null ? r.Test.Name : "Unknown Test",
-                        Score = r.Score,
-                        CompletedAt = r.CompletedAt ?? DateTime.UtcNow
-                    })
-                    .ToListAsync();
-
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting user results");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-        [HttpGet("{id}/info")]
-        [AllowAnonymous]
-        public async Task<ActionResult<TestInfo>> GetTestInfo(int id)
-        {
-            var test = await _context.Languagetests
-                .AsNoTracking()
-                .FirstOrDefaultAsync(t => t.Id == id);
-
-            if (test == null)
-                return NotFound();
-
-            return new TestInfo
-            {
-                Id = test.Id,
-                Name = test.Name
-            };
-        }
-        [Authorize]
-        [HttpGet("{testId}/results/{userId}")]
-        public async Task<ActionResult<TestResultDetailsDto>> GetTestResultDetails(int testId, int userId)
-        {
-            var result = await _context.Usertestresults
-                .Include(r => r.Test)
-                .FirstOrDefaultAsync(r => r.TestId == testId && r.UserId == userId);
-
-            if (result == null)
-                return NotFound();
-
-            var questions = await _context.TestQuestions
-                .Where(q => q.Id == testId)
-                .ToListAsync();
-
-            return new TestResultDetailsDto
-            {
-                TestId = testId,
-                TestName = result.Test?.Name ?? "Unknown Test",
-                Score = result.Score,
-                TotalQuestions = questions.Count,
-                CompletedAt = result.CompletedAt ?? DateTime.MinValue,
-                Questions = questions.Select(q => new QuestionResultDto
-                {
-                    QuestionId = q.Id,
-                    QuestionText = q.Question,
-                    CorrectAnswer = q.Answer
-                }).ToList()
-            };
-        }
-        [Authorize]
-        [HttpGet("results/{resultId}")]
-        public async Task<ActionResult<TestResultDetailsDto>> GetTestResultDetails(int resultId)
-        {
-            var result = await _context.Usertestresults
-                .Include(r => r.Test)
-                .Include(r => r.UserAnswers)
-                    .ThenInclude(ua => ua.Question)
-                .FirstOrDefaultAsync(r => r.Id == resultId);
-
-            if (result == null) return NotFound();
-
-            return new TestResultDetailsDto
-            {
-                Id = result.Id,
-                TestId = result.TestId,
-                TestName = result.Test?.Name ?? "Unknown Test",
-                Score = result.Score,
-                TotalQuestions = result.UserAnswers.Count,
-                CompletedAt = result.CompletedAt ?? DateTime.MinValue,
-                Questions = result.UserAnswers.Select(ua => new QuestionResultDto
-                {
-                    QuestionId = ua.QuestionId,
-                    QuestionText = ua.Question.Question,
-                    CorrectAnswer = ua.Question.Answer,
-                    UserAnswer = ua.UserAnswerText,
-                    IsCorrect = ua.IsCorrect
-                }).ToList()
-            };
-        }
+       
         // GET: api/tests/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TestDetailDto>> GetTest(int id)
@@ -326,6 +133,95 @@ namespace APIPRA.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-      
+        // APIPRA/Controllers/TestsController.cs
+
+        [HttpGet("{id}/questions")]
+        public async Task<ActionResult<IEnumerable<QuestionDto>>> GetTestQuestions(int id)
+        {
+            try
+            {
+                // Вариант 1: Получение вопросов из таблицы TestQuestions
+                var questions = await _context.TestQuestions
+                    .Where(q => q.TestId == id)
+                    .Select(q => new QuestionDto
+                    {
+                        Id = q.Id,
+                        Question = q.Question,
+                        QuestionType = q.QuestionType,
+                        Answer = q.Answer,
+                        Options = q.Options ?? new List<string>()
+                    })
+                    .ToListAsync();
+
+                if (!questions.Any())
+                    return NotFound();
+
+                return Ok(questions);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting test questions");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // Метод для сохранения результатов теста
+        [HttpPost("{id}/results")]
+        [Authorize]
+        public async Task<ActionResult<TestResultDto>> SaveTestResult(int id, [FromBody] TestResultRequest request)
+        {
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                    return Unauthorized();
+
+                // Проверяем существование теста
+                var test = await _context.Languagetests.FindAsync(id);
+                if (test == null)
+                    return NotFound();
+
+                // Сохраняем основной результат
+                var result = new Usertestresult
+                {
+                    UserId = int.Parse(userId),
+                    TestId = id,
+                    Score = request.Score,
+                    CompletedAt = DateTime.UtcNow
+                };
+
+                _context.Usertestresults.Add(result);
+                await _context.SaveChangesAsync();
+
+                // Сохраняем ответы на вопросы
+                foreach (var answer in request.Answers)
+                {
+                    var userAnswer = new UserAnswer
+                    {
+                        UserTestResultId = result.Id,
+                        QuestionId = answer.QuestionId,
+                        UserAnswerText = answer.UserAnswer,
+                        IsCorrect = answer.IsCorrect
+                    };
+                    _context.UserAnswers.Add(userAnswer);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new TestResultDto
+                {
+                    TestId = id,
+                    Score = request.Score,
+                    TotalQuestions = request.Answers.Count,
+                    CorrectAnswers = request.Answers.Count(a => a.IsCorrect)
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving test result");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

@@ -2,20 +2,18 @@
 
 namespace APIPRA.Models
 {
-    [Table("testquestions")]
+    // В APIPRA/Models/TestQuestion.cs
     public class TestQuestion
     {
         public int Id { get; set; }
-
+        public int TestId { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
-
-        // 👇 Обязательное поле — внешний ключ
-        public int TestId { get; set; }
-
-        // 👇 Навигационное свойство (опционально)
-        public Languagetest Test { get; set; }
         public string QuestionType { get; set; }
+        public List<string> Options { get; set; } // Добавляем это свойство
 
+        // Навигационные свойства
+        public Languagetest Test { get; set; }
+        public List<UserAnswer> UserAnswers { get; set; }
     }
 }
