@@ -26,7 +26,7 @@ namespace APIPRA.Models
         public string QuestionType { get; set; }
 
         // Для хранения JSON массива в PostgreSQL
-        [Column(TypeName = "jsonb")]
+        [NotMapped]
         public List<string> Options { get; set; } = new List<string>();
 
         // Навигационные свойства
