@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace APIPRA.Models
 {
@@ -29,7 +30,7 @@ namespace APIPRA.Models
         [NotMapped]
         public List<string> Options { get; set; } = new List<string>();
 
-        // Навигационные свойства
+        [JsonIgnore]
         public virtual Languagetest Test { get; set; }
         public virtual ICollection<UserAnswer> UserAnswers { get; set; }
     }
