@@ -22,7 +22,12 @@ namespace APIPRA.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Languagetest>>> GetLanguageTests()
         {
-            return await _context.Languagetests.ToListAsync();
+                var tests = await _context.Languagetests
+                    .Include(t => t.TestQuestions) // подгружаем вопросы
+                    .Include(t => t.Testimages)    // если нужны изображения
+                    .ToListAsync();
+
+                return Ok(tests);
         }
 
         // GET: api/LanguageTests/quiz - только тесты типа quiz
@@ -111,6 +116,7 @@ namespace APIPRA.Controllers
                 new { testId = result.TestId, userId = result.UserId },
                 result);
         }
+
     }
 
     public class LanguageTestWithQuestions

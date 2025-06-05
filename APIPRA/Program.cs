@@ -17,7 +17,6 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Добавьте это в начало метода Main или ConfigureServices

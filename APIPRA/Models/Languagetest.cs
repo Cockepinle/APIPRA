@@ -22,7 +22,7 @@ public class Languagetest
     // Связь с изображениями теста
     public virtual ICollection<Testimage> Testimages { get; set; } = new List<Testimage>();
 
-    // Добавляем связь с вопросами теста
+    public virtual ICollection<Usertestresult> Usertestresults { get; set; }
     public virtual ICollection<TestQuestion> TestQuestions { get; set; } = new List<TestQuestion>();
 }
 
