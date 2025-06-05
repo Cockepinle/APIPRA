@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace APIPRA.Models
 {
@@ -25,6 +26,7 @@ namespace APIPRA.Models
         public DateTime CreatedAt { get; set; }
 
         [ForeignKey("TestId")]
+        [JsonIgnore]
         public virtual Languagetest Test { get; set; } = null!;  // <--- ВАЖНО
     }
 
