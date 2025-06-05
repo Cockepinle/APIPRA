@@ -18,19 +18,17 @@ namespace APIPRA.Controllers
             _context = context;
         }
 
-        // GET: api/LanguageTests - все тесты
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Languagetest>>> GetLanguageTests()
         {
-                var tests = await _context.Languagetests
-                    .Include(t => t.TestQuestions) // подгружаем вопросы
-                    .Include(t => t.Testimages)    // если нужны изображения
-                    .ToListAsync();
+            var tests = await _context.Languagetests
+                .Include(t => t.TestQuestions)
+                .Include(t => t.Testimages)
+                .ToListAsync();
 
-                return Ok(tests);
+            return Ok(tests);
         }
 
-        // GET: api/LanguageTests/quiz - только тесты типа quiz
         [HttpGet("quiz")]
         public async Task<ActionResult<IEnumerable<LanguageTestWithQuestions>>> GetQuizTests()
         {
@@ -39,6 +37,7 @@ namespace APIPRA.Controllers
                 var testsWithQuestions = await _context.Languagetests
                     .Where(t => t.Type == "quiz")
                     .Include(t => t.TestQuestions)
+                    .Include(t => t.Testimages)
                     .Select(t => new LanguageTestWithQuestions
                     {
                         Test = t,
@@ -67,30 +66,27 @@ namespace APIPRA.Controllers
             }
         }
 
-        // GET: api/LanguageTests/5 - конкретный тест с вопросами
         [HttpGet("{id}")]
         public async Task<ActionResult<LanguageTestWithQuestions>> GetLanguageTest(int id)
         {
-            var test = await _context.Languagetests.FindAsync(id);
-            if (test == null)
-            {
-                return NotFound();
-            }
+            var test = await _context.Languagetests
+                .Include(t => t.TestQuestions)
+                .Include(t => t.Testimages)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
-            var questions = await _context.TestQuestions
-                .Where(q => q.TestId == id)
-                .ToListAsync();
+            if (test == null)
+                return NotFound();
 
             var result = new LanguageTestWithQuestions
             {
                 Test = test,
-                Questions = questions
+                Questions = test.TestQuestions.ToList(),
+                Images = test.Testimages.ToList()
             };
 
             return result;
         }
 
-        // GET: api/LanguageTests/5/results - результаты пользователя по тесту
         [HttpGet("{testId}/results/{userId}")]
         public async Task<ActionResult<Usertestresult>> GetUserTestResult(int testId, int userId)
         {
@@ -98,17 +94,19 @@ namespace APIPRA.Controllers
                 .FirstOrDefaultAsync(r => r.TestId == testId && r.UserId == userId);
 
             if (result == null)
-            {
                 return NotFound();
-            }
 
             return result;
         }
 
-        // POST: api/LanguageTests/results - сохранение результата теста
         [HttpPost("results")]
         public async Task<ActionResult<Usertestresult>> PostTestResult(Usertestresult result)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // При желании проверить существование теста и пользователя
+
             _context.Usertestresults.Add(result);
             await _context.SaveChangesAsync();
 
@@ -116,14 +114,14 @@ namespace APIPRA.Controllers
                 new { testId = result.TestId, userId = result.UserId },
                 result);
         }
-
     }
 
     public class LanguageTestWithQuestions
     {
         public Languagetest Test { get; set; }
-        public List<TestQuestion> Questions { get; set; }
-        public List<Testimage> Images { get; set; }
+        public List<TestQuestion> Questions { get; set; } = new List<TestQuestion>();
+        public List<Testimage> Images { get; set; } = new List<Testimage>();
     }
+
 
 }
