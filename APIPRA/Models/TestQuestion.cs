@@ -6,10 +6,16 @@ namespace APIPRA.Models
     public class TestQuestion
     {
         public int Id { get; set; }
-        public int TestId { get; set; }
-        public Languagetest Test { get; set; } // Навигационное свойство
+
         public string Question { get; set; }
         public string Answer { get; set; }
+
+        // 👇 Обязательное поле — внешний ключ
+        public int TestId { get; set; }
+
+        // 👇 Навигационное свойство (опционально)
+        public Languagetest Test { get; set; }
         public string QuestionType { get; set; }
+
     }
 }

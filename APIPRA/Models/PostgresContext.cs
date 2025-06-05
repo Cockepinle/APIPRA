@@ -441,19 +441,23 @@ public partial class PostgresContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.TestId).HasColumnName("test_id");
+
             entity.Property(e => e.Question)
                 .HasColumnName("question")
                 .IsRequired()
                 .HasMaxLength(1000);
+
             entity.Property(e => e.Answer)
                 .HasColumnName("answer")
                 .IsRequired()
                 .HasMaxLength(1000);
-            entity.Property(e => e.QuestionType)
+
+            entity.Property(e => e.QuestionType) // <-- вот тут правильно
                 .HasColumnName("question_type")
                 .IsRequired()
                 .HasMaxLength(255);
         });
+
 
         modelBuilder.Entity<User>(entity =>
         {

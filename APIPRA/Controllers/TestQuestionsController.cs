@@ -36,7 +36,7 @@ namespace APIPRA.Controllers
             _context.TestQuestions.Add(question);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetQuestionById), new { testId = testId, id = question.Id }, question);
+            return CreatedAtAction(nameof(GetQuestionById), new { testId = testId, id = question.TestId }, question);
         }
 
         // GET: api/tests/{testId}/questions/{id}
