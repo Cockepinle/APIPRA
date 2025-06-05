@@ -136,7 +136,7 @@ namespace APIPRA.Controllers
         }
         // APIPRA/Controllers/TestsController.cs
 
-        [HttpGet("{id}/questions")]
+       /* [HttpGet("{id}/questions")]
         public async Task<ActionResult<IEnumerable<QuestionDto>>> GetTestQuestions(int id)
         {
             try
@@ -166,7 +166,7 @@ namespace APIPRA.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
+*/
         // Метод для сохранения результатов теста
         [HttpPost("{id}/results")]
         [Authorize]
