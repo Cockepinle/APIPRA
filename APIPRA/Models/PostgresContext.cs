@@ -452,7 +452,13 @@ public partial class PostgresContext : DbContext
                 .IsRequired()
                 .HasMaxLength(255);
 
-           
+            entity.Property(e => e.Options)
+         .HasColumnName("options")
+         .HasColumnType("jsonb")
+         .HasConversion(
+             v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+             v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions?)null))
+         .IsRequired(false); 
             // Настройка связей
             entity.HasOne(tq => tq.Test)
                 .WithMany(t => t.TestQuestions)

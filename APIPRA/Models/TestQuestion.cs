@@ -27,7 +27,6 @@ namespace APIPRA.Models
         public string QuestionType { get; set; }
 
         // Для хранения JSON массива в PostgreSQL
-        [NotMapped]
         public List<string> Options { get; set; } = new List<string>();
 
         [JsonIgnore]
