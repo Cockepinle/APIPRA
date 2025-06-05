@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APIPRA.Models;
+using System.Text.Json;
 
 namespace APIPRA.Controllers
 {
@@ -29,44 +30,68 @@ namespace APIPRA.Controllers
             return Ok(tests);
         }
 
-        [HttpGet("quiz")]
-        public async Task<ActionResult<IEnumerable<LanguageTestWithQuestions>>> GetQuizTests()
-        {
-            try
-            {
-                var testsWithQuestions = await _context.Languagetests
-                    .Where(t => t.Type == "quiz")
-                    .Include(t => t.TestQuestions)
-                    .Include(t => t.Testimages)
-                    .Select(t => new LanguageTestWithQuestions
-                    {
-                        Test = t,
-                        Questions = t.TestQuestions.Select(q => new TestQuestion
-                        {
-                            Id = q.Id,
-                            TestId = q.TestId,
-                            Question = q.Question,
-                            Answer = q.Answer,
-                            QuestionType = q.QuestionType
-                        }).ToList(),
-                        Images = t.Testimages.ToList()
-                    })
-                    .AsNoTracking()
-                    .ToListAsync();
 
-                return Ok(testsWithQuestions);
-            }
-            catch (Exception ex)
+[HttpGet("quiz")]
+    public async Task<ActionResult<IEnumerable<object>>> GetQuizTests()
+    {
+        var tests = await _context.Languagetests
+            .Where(t => t.Type == "quiz")
+            .Include(t => t.Testimages)
+            .ToListAsync();
+
+        var results = new List<object>();
+
+        foreach (var test in tests)
+        {
+            var questions = new List<object>();
+
+            foreach (var img in test.Testimages)
             {
-                return StatusCode(500, new
+                if (string.IsNullOrEmpty(img.Metadata))
+                    continue;
+
+                try
                 {
-                    error = ex.Message,
-                    details = "Check if 'options' column exists in database"
-                });
+                    using JsonDocument doc = JsonDocument.Parse(img.Metadata);
+                    var root = doc.RootElement;
+
+                    if (root.TryGetProperty("Questions", out JsonElement questionsElement))
+                    {
+                        foreach (var questionElem in questionsElement.EnumerateArray())
+                        {
+                            var question = new
+                            {
+                                Question = questionElem.GetProperty("Question").GetString(),
+                                Answer = questionElem.GetProperty("Answer").GetString(),
+                                Options = questionElem.GetProperty("Options").EnumerateArray().Select(o => o.GetString()).ToList(),
+                                QuestionType = questionElem.TryGetProperty("QuestionType", out var qt) ? qt.GetString() : null
+                            };
+                            questions.Add(question);
+                        }
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Логировать ошибку парсинга, если нужно
+                    continue;
+                }
             }
+
+            results.Add(new
+            {
+                TestId = test.Id,
+                TestName = test.Name,
+                TestType = test.Type,
+                Questions = questions,
+                Images = test.Testimages.Select(i => i.ImageUrl).ToList()
+            });
         }
 
-        [HttpGet("{id}")]
+        return Ok(results);
+    }
+
+
+    [HttpGet("{id}")]
         public async Task<ActionResult<LanguageTestWithQuestions>> GetLanguageTest(int id)
         {
             var test = await _context.Languagetests
