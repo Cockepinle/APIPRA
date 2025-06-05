@@ -9,95 +9,85 @@ namespace APIPRA.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LanguagetestsController : ControllerBase
+    public class LanguageTestsController : ControllerBase
     {
         private readonly PostgresContext _context;
 
-        public LanguagetestsController(PostgresContext context)
+        public LanguageTestsController(PostgresContext context)
         {
             _context = context;
         }
 
-        // GET: api/Languagetests
+        // GET: api/LanguageTests - все тесты
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Languagetest>>> GetLanguagetests()
+        public async Task<ActionResult<IEnumerable<Languagetest>>> GetLanguageTests()
         {
             return await _context.Languagetests.ToListAsync();
         }
 
-        // GET: api/Languagetests/5
+        // GET: api/LanguageTests/quiz - только тесты типа quiz
+        [HttpGet("quiz")]
+        public async Task<ActionResult<IEnumerable<Languagetest>>> GetQuizTests()
+        {
+            return await _context.Languagetests
+                .Where(t => t.Type == "quiz")
+                .ToListAsync();
+        }
+
+        // GET: api/LanguageTests/5 - конкретный тест с вопросами
         [HttpGet("{id}")]
-        public async Task<ActionResult<Languagetest>> GetLanguagetest(int id)
+        public async Task<ActionResult<LanguageTestWithQuestions>> GetLanguageTest(int id)
         {
-            var languagetest = await _context.Languagetests.FindAsync(id);
-
-            if (languagetest == null)
+            var test = await _context.Languagetests.FindAsync(id);
+            if (test == null)
             {
                 return NotFound();
             }
 
-            return languagetest;
+            var questions = await _context.TestQuestions
+                .Where(q => q.TestId == id)
+                .ToListAsync();
+
+            var result = new LanguageTestWithQuestions
+            {
+                Test = test,
+                Questions = questions
+            };
+
+            return result;
         }
 
-        // POST: api/Languagetests
-        [HttpPost]
-        public async Task<ActionResult<Languagetest>> PostLanguagetest(Languagetest languagetest)
+        // GET: api/LanguageTests/5/results - результаты пользователя по тесту
+        [HttpGet("{testId}/results/{userId}")]
+        public async Task<ActionResult<Usertestresult>> GetUserTestResult(int testId, int userId)
         {
-            _context.Languagetests.Add(languagetest);
-            await _context.SaveChangesAsync();
+            var result = await _context.Usertestresults
+                .FirstOrDefaultAsync(r => r.TestId == testId && r.UserId == userId);
 
-            return CreatedAtAction(nameof(GetLanguagetest), new { id = languagetest.Id }, languagetest);
-        }
-
-        // PUT: api/Languagetests/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLanguagetest(int id, Languagetest languagetest)
-        {
-            if (id != languagetest.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(languagetest).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LanguagetestExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // DELETE: api/Languagetests/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLanguagetest(int id)
-        {
-            var languagetest = await _context.Languagetests.FindAsync(id);
-            if (languagetest == null)
+            if (result == null)
             {
                 return NotFound();
             }
 
-            _context.Languagetests.Remove(languagetest);
+            return result;
+        }
+
+        // POST: api/LanguageTests/results - сохранение результата теста
+        [HttpPost("results")]
+        public async Task<ActionResult<Usertestresult>> PostTestResult(Usertestresult result)
+        {
+            _context.Usertestresults.Add(result);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return CreatedAtAction(nameof(GetUserTestResult),
+                new { testId = result.TestId, userId = result.UserId },
+                result);
         }
+    }
 
-        private bool LanguagetestExists(int id)
-        {
-            return _context.Languagetests.Any(e => e.Id == id);
-        }
+    public class LanguageTestWithQuestions
+    {
+        public Languagetest Test { get; set; }
+        public List<TestQuestion> Questions { get; set; }
     }
 }
